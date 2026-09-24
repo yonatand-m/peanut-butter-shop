@@ -15,7 +15,6 @@
     --text-muted: #6e5d4f;
     --border: #e6dacd;
     --accent-green: #2d7a3e;
-    --accent-green-bg: #edf7ef;
     --radius-lg: 24px;
     --radius-md: 14px;
     --radius-sm: 8px;
@@ -73,7 +72,6 @@
   .copy-btn { background: var(--text-dark); color: white; border: none; padding: 0.5rem 0.85rem; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer; }
   @media (max-width: 820px) { .content { grid-template-columns: 1fr; } .visual-panel { border-left: none; border-top: 1px solid var(--border); } }
 
-  /* SUCCESS SCREEN */
   #successScreen { display: none; padding: 3rem 2rem; text-align: center; }
   #successScreen.show { display: block; }
   .success-icon { font-size: 5rem; margin-bottom: 1rem; }
@@ -183,7 +181,7 @@
             <span id="subtotalText">550 Birr</span>
           </div>
           <div class="summary-row discount" id="discountRow" style="display: none;">
-            <span>Bulk Discount (30%)</span>
+            <span id="discountLabel">Bulk Discount</span>
             <span id="discountText">-0 Birr</span>
           </div>
           <div class="summary-row total">
@@ -204,7 +202,7 @@
         <ul class="benefits-list">
           <li>🚀 Same-week delivery directly to campus</li>
           <li>🧂 <strong>No salt</strong> — pure peanuts only</li>
-          <li>🏷️ 30% discount when ordering 6+ jars</li>
+          <li>🏷️ 50 Birr off per jar when ordering 6+ jars</li>
           <li>🎁 12 referrals → big discount</li>
         </ul>
       </div>
@@ -223,7 +221,6 @@
     </div>
   </div>
 
-  <!-- SUCCESS SCREEN -->
   <div id="successScreen">
     <div class="success-icon">✅</div>
     <div class="success-title">Order placed successfully!</div>
@@ -257,8 +254,8 @@
   var TELEGRAM_BOT_TOKEN = '7917605533:AAEbEf3vEZM8kbbx9qHRrwHZ8Cx1OFwGfkU';
   var TELEGRAM_CHAT_ID   = '6446270768';
   var PRICE_PER_JAR      = 550;
-  var BULK_THRESHOLD     = 6;
-  var BULK_DISCOUNT_RATE = 0.30;
+  var BULK_THRESHOLD     = 6;    // jars needed to unlock the discount
+  var BULK_DISCOUNT_PER_JAR = 50; // flat Birr off EACH jar
   var REFERRAL_TARGET    = 12;
   // ==========================================
 
@@ -291,14 +288,14 @@
 
   document.getElementById('copyRefBtn').addEventListener('click', function() {
     var btn = this;
+    var done = function() {
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+    };
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(referralLink).then(function() {
-        btn.textContent = 'Copied!';
-        setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
-      }).catch(function() {
+      navigator.clipboard.writeText(referralLink).then(done).catch(function() {
         document.getElementById('refLinkInput').select();
-        btn.textContent = 'Copied!';
-        setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+        done();
       });
     } else {
       document.getElementById('refLinkInput').select();
@@ -346,182 +343,15 @@
     aauCampusSelect.required = true;
   });
 
-  // ---------- Pricing ----------
-  function updatePricing() {
-    var qty = parseInt(qtyInput.value, 10) || 1;
+  // ---------- Pricing (flat 50 Birr off per jar) ----------
+  function calculateTotals(qty) {
     var subtotal = qty * PRICE_PER_JAR;
     var discount = 0;
+    var label = 'Bulk Discount';
 
     if (refCount >= REFERRAL_TARGET) {
+      // Full 100% off for hitting referral target
       discount = subtotal;
+      label = 'Referral Reward (100% off)';
     } else if (qty >= BULK_THRESHOLD) {
-      discount = Math.round(subtotal * BULK_DISCOUNT_RATE);
-    }
-
-    var total = subtotal - discount;
-    document.getElementById('subtotalText').textContent = subtotal + ' Birr';
-    if (discount > 0) {
-      document.getElementById('discountRow').style.display = 'flex';
-      document.getElementById('discountText').textContent = '-' + discount + ' Birr';
-    } else {
-      document.getElementById('discountRow').style.display = 'none';
-    }
-    document.getElementById('totalText').textContent = total + ' Birr';
-  }
-  updatePricing();
-
-  // ---------- Order number ----------
-  function genOrderNum() {
-    var rand = Math.floor(1000 + Math.random() * 9000);
-    var d = new Date();
-    var mm = String(d.getMonth() + 1).padStart(2, '0');
-    var dd = String(d.getDate()).padStart(2, '0');
-    return '#PB-' + mm + dd + '-' + rand;
-  }
-
-  // ---------- Submit ----------
-  document.getElementById('peanutOrderForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    var name = document.getElementById('fullName').value.trim();
-    var phone = document.getElementById('phone').value.trim();
-    var address = document.getElementById('address').value.trim();
-    var deliveryTime = document.getElementById('deliveryTime').value;
-    var isAASTU = uniAASTU.checked;
-    var isAAU = uniAAU.checked;
-
-    // Validation
-    if (!name || !phone || !address) {
-      alert('Please fill in name, phone, and address.');
-      return;
-    }
-    if (!isAASTU && !isAAU) {
-      alert('Please select your university (AASTU or AAU).');
-      return;
-    }
-    if (!deliveryTime) {
-      alert('Please choose a delivery time.');
-      return;
-    }
-
-    var campusDetail = '';
-    if (isAASTU) {
-      campusDetail = aastuSelect.value;
-      if (!campusDetail) { alert('Please choose your block (1-28).'); return; }
-    } else {
-      campusDetail = aauCampusSelect.value;
-      if (!campusDetail) { alert('Please choose your campus.'); return; }
-    }
-
-    var qty = parseInt(qtyInput.value, 10);
-    var subtotal = qty * PRICE_PER_JAR;
-    var discount = 0;
-    var discountText = 'None';
-    if (refCount >= REFERRAL_TARGET) {
-      discount = subtotal;
-      discountText = '-' + discount + ' Birr (referral reward)';
-    } else if (qty >= BULK_THRESHOLD) {
-      discount = Math.round(subtotal * BULK_DISCOUNT_RATE);
-      discountText = '-' + discount + ' Birr (30% bulk)';
-    }
-    var total = subtotal - discount;
-    var orderNumber = genOrderNum();
-    var locationStr = (isAASTU ? 'AASTU — ' : 'AAU — ') + campusDetail;
-
-    // Build Telegram message
-    var message = '🥜 NEW PEANUT BUTTER ORDER 🥜\n\n' +
-      '🧾 Order: ' + orderNumber + '\n\n' +
-      '👤 Name: ' + name + '\n' +
-      '📞 Phone: ' + phone + '\n' +
-      '🎓 University: ' + (isAASTU ? 'AASTU' : 'AAU') + '\n' +
-      '📍 Location: ' + locationStr + '\n' +
-      '🏠 Address: ' + address + '\n\n' +
-      '🔢 Jars: ' + qty + '\n' +
-      '💰 Subtotal: ' + subtotal + ' Birr\n' +
-      '🎁 Discount: ' + discountText + '\n' +
-      '💵 TOTAL: ' + total + ' Birr\n\n' +
-      '🕒 Delivery: ' + deliveryTime + '\n' +
-      '🔗 Referral: ' + myRefCode + '\n' +
-      '📅 ' + new Date().toLocaleString();
-
-    // Fill receipt BEFORE sending (so it's ready instantly)
-    document.getElementById('rOrderNum').textContent = orderNumber;
-    document.getElementById('rName').textContent = name;
-    document.getElementById('rPhone').textContent = phone;
-    document.getElementById('rUni').textContent = isAASTU ? 'AASTU' : 'AAU';
-    document.getElementById('rLocation').textContent = locationStr;
-    document.getElementById('rAddress').textContent = address;
-    document.getElementById('rJars').textContent = qty;
-    document.getElementById('rDiscount').textContent = discountText;
-    document.getElementById('rDelivery').textContent = deliveryTime;
-    document.getElementById('rTotal').textContent = total + ' Birr';
-
-    var btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending order...';
-
-    var telegramUrl = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-    var payload = JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message });
-
-    // Send via two methods: try fetch, then fallback to navigator.sendBeacon
-    sendOrder(telegramUrl, payload, function() {
-      // On any result (success or CORS error), show success screen
-      btn.disabled = false;
-      btn.textContent = 'Confirm Order';
-      document.getElementById('orderContent').style.display = 'none';
-      document.getElementById('successScreen').classList.add('show');
-      window.scrollTo(0, 0);
-    });
-  });
-
-  // Robust send function — handles CORS properly
-  function sendOrder(url, payload, onDone) {
-    // Method 1: fetch with no-cors (avoids CORS error, but response is opaque)
-    // We consider it "sent" as long as no exception is thrown
-    var done = false;
-
-    function finish() {
-      if (done) return;
-      done = true;
-      onDone();
-    }
-
-    // Safety timeout — if fetch hangs, finish after 8 seconds
-    var timeout = setTimeout(finish, 8000);
-
-    fetch(url, {
-      method: 'POST',
-      mode: 'no-cors',           // ✅ KEY FIX: avoid CORS block
-      headers: { 'Content-Type': 'application/json' },
-      body: payload
-    })
-    .then(function() {
-      // With no-cors, response is opaque but request DID go through
-      clearTimeout(timeout);
-      finish();
-    })
-    .catch(function(err) {
-      // Even on error, most likely the request went through
-      clearTimeout(timeout);
-      console.warn('Send note (may still have succeeded):', err);
-      finish();
-    });
-  }
-
-  // ---------- New order ----------
-  document.getElementById('newOrderBtn').addEventListener('click', function() {
-    document.getElementById('successScreen').classList.remove('show');
-    document.getElementById('orderContent').style.display = 'grid';
-    document.getElementById('peanutOrderForm').reset();
-    aastuGroup.style.display = 'none';
-    aauGroup.style.display = 'none';
-    qtyInput.value = 1;
-    updatePricing();
-    window.scrollTo(0, 0);
-  });
-
-})();
-</script>
-
-</body>
-</html>
+    
