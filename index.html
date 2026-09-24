@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peanut Butter Co. · order online</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: #fbf7f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    /* main card */
+    .order-card {
+      max-width: 1000px;
+      width: 100%;
+      background: white;
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.25), 0 8px 18px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: all 0.2s;
+      border: 1px solid #f0e4d8;
+    }
+
+    /* header */
+    .header {
+      background: #b45f2b;
+      background-image: linear-gradient(145deg, #c97b3f, #9f4e1f);
+      padding: 2rem 2.5rem;
+      color: white;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .header h1 span {
+      font-size: 2.4rem;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+    }
+
+    /* main content – two columns */
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 0;
+    }
+
+    /* left side – product + order form */
+    .order-panel {
+      padding: 2rem 2rem 2rem 2.5rem;
+      background: white;
+    }
+
+    .product-highlight {
+      background: #fef9f2;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #f0ddcc;
+    }
+
+    .product-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-title h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #3a2618;
+      letter-spacing: -0.02em;
+    }
+
+    .badge {
+      background: #e6b17e;
+      color: #2c1a0e;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .price {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #9f4e1f;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .price small {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #7a5a44;
+    }
+
+    .description {
+      color: #5d4a3a;
+      line-height: 1.5;
+      margin-top: 0.75rem;
+      font-size: 0.98rem;
+      border-left: 3px solid #e6b17e;
+      padding-left: 1rem;
+    }
+
+    /* form */
+    .order-form h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2e1e12;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .order-form h3::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, #e6d6c6, transparent);
+      margin-left: 0.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.6rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #4f3a2b;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .form-group label span {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1.5px solid #ddd0c2;
+      border-radius: 1.2rem;
+      font-size: 1rem;
+      background: #fdfbf9;
+      transition: 0.15s;
+      outline: none;
+      font-family: inherit;
+      color: #2a1e14;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #b45f2b;
+      box-shadow: 0 0 0 4px rgba(180, 95, 43, 0.12);
+      background: white;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #b9a89b;
+    }
+
+    .qty-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .qty-wrapper input {
+      max-width: 140px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .qty-hint {
+      font-size: 0.9rem;
+      color: #927a68;
+      background: #f3ede7;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+    }
+
+    /* order summary box */
+    .order-summary {
+      background: #fdf5ed;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-top: 1.8rem;
+      border: 1px solid #ecdccc;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      color: #3a2a1e;
+    }
+
+    .summary-row.total {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-top: 0.8rem;
+      padding-top: 0.9rem;
+      border-top: 2px dashed #d9c7b6;
+      color: #753e16;
+    }
+
+    .summary-row.total span:last-child {
+      color: #9f4e1f;
+    }
+
+    .action-button {
+      width: 100%;
+      background: #b45f2b;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 1.2rem 1.5rem;
+      border: none;
+      border-radius: 2rem;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      box-shadow: 0 12px 18px -8px rgba(180, 95, 43, 0.4);
+      letter-spacing: 0.3px;
+    }
+
+    .action-button:hover {
+      background: #9f4e1f;
+      transform: scale(1.01);
+      box-shadow: 0 15px 22px -8px rgba(180, 95, 43, 0.5);
+    }
+
+    .action-button:active {
+      transform: scale(0.99);
+      box-shadow: 0 5px 12px -6px rgba(180, 95, 43, 0.5);
+    }
+
+    /* right side – visual / order info */
+    .visual-panel {
+      background: #f7ede3;
+      padding: 2rem 1.8rem 2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #e2d2c2;
+    }
+
+    .jar-illustration {
+      background: #e6d4c0;
+      background-image: radial-gradient(circle at 30% 30%, #f3e7db, #c9aa8b);
+      border-radius: 180px 180px 40px 40px;
+      width: 180px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 18px 25px -10px rgba(80, 50, 25, 0.3);
+      border: 3px solid #b48b64;
+      position: relative;
+    }
+
+    .jar-illustration::before {
+      content: "🥜";
+      font-size: 5rem;
+      filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.15));
+    }
+
+    .jar-illustration::after {
+      content: "PEANUT BUTTER";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #b45f2b;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 0.3rem 1.5rem;
+      border-radius: 40px;
+      white-space: nowrap;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-block {
+      background: #fff9f3;
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.3rem;
+      margin-top: 1rem;
+      border: 1px solid #e4d4c4;
+    }
+
+    .info-block h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #4f3522;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-block ul {
+      list-style: none;
+    }
+
+    .info-block li {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+      color: #4f3a2b;
+      align-items: center;
+    }
+
+    .info-block li span:first-child {
+      font-size: 1.3rem;
+      width: 1.8rem;
+      text-align: center;
+    }
+
+    .shipping-note {
+      background: #e6d9cc;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #493829;
+      text-align: center;
+      font-weight: 500;
+      border: 1px dashed #b48b64;
+    }
+
+    /* feedback message */
+    .toast-message {
+      background: #2d5e3b;
+      color: white;
+      padding: 0.9rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .toast-message.show {
+      opacity: 1;
+    }
+
+    /* responsive */
+    @media (max-width: 800px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-panel {
+        border-left: none;
+        border-top: 1px solid #e2d2c2;
+        padding: 2rem 1.8rem;
+      }
+
+      .order-panel {
+        padding: 2rem 1.8rem;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0.75rem;
+      }
+
+      .header {
+        padding: 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .tagline {
+        font-size: 0.9rem;
+      }
+
+      .order-panel,
+      .visual-panel {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="order-card">
+  <!-- header -->
+  <div class="header">
+    <h1>
+      <span>🥜</span> Peanut Butter Co.
+    </h1>
+    <div class="tagline">small batch · stone ground</div>
+  </div>
+
+  <!-- main grid -->
+  <div class="content">
+    <!-- LEFT: ORDER FORM -->
+    <div class="order-panel">
+      <!-- product highlight -->
+      <div class="product-highlight">
+        <div class="product-title">
+          <h2>Classic Creamy</h2>
+          <div class="badge">best seller</div>
+        </div>
+        <div class="price">
+          $8.50 <small>/ 16 oz jar</small>
+        </div>
+        <div class="description">
+          Roasted peanuts, a pinch of sea salt, and nothing else. 
+          Smooth, spreadable, and made fresh every week.
+        </div>
+      </div>
+
+      <!-- order form -->
+      <form class="order-form" id="peanutOrderForm">
+        <h3>
+          <span>📦</span> Your order
+        </h3>
+
+        <!-- quantity -->
+        <div class="form-group">
+          <label for="quantity"><span>🔢</span> Number of jars</label>
+          <div class="qty-wrapper">
+            <input type="number" id="quantity" name="quantity" value="2" min="1" max="99" step="1" required>
+            <span class="qty-hint">max 99</span>
+          </div>
+        </div>
+
+        <!-- address -->
+        <div class="form-group">
+          <label for="address"><span>🏠</span> Delivery address</label>
+          <textarea id="address" name="address" rows="2" placeholder="Street, city, postal code" required></textarea>
+        </div>
+
+        <!-- full name (optional but nice) -->
+        <div class="form-group">
+          <label for="fullName"><span>👤</span> Full name (optional)</label>
+          <input type="text" id="fullName" name="fullName" placeholder="e.g. Alex Morgan">
+        </div>
+
+        <!-- dynamic order summary -->
+        <div class="order-summary" id="orderSummary">
+          <div class="summary-row">
+            <span>Peanut butter jars</span>
+            <span id="summaryQty">2</span>
+          </div>
+          <div class="summary-row">
+            <span>Price per jar</span>
+            <span>$8.50</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="summaryTotal">$17.00</span>
+          </div>
+        </div>
+
+        <!-- submit button -->
+        <button type="submit" class="action-button" id="orderBtn">
+          <span>🛒</span> Place order
+        </button>
+
+        <!-- feedback message -->
+        <div class="toast-message" id="toast">✓ Order placed! We'll email you a confirmation.</div>
+      </form>
+    </div>
+
+    <!-- RIGHT: VISUAL / INFO -->
+    <div class="visual-panel">
+      <div class="jar-illustration"></div>
+
+      <div class="info-block">
+        <h4><span>✨</span> Why you'll love it</h4>
+        <ul>
+          <li><span>🌱</span> 100% natural ingredients</li>
+          <li><span>🚚</span> Free shipping over $30</li>
+          <li><span>📅</span> Freshly ground every Tuesday</li>
+          <li><span>♻️</span> Recyclable glass jar</li>
+        </ul>
+      </div>
+
+      <div class="shipping-note">
+        📬 &nbsp; We deliver to all US states — usually within 2–4 business days.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const PRICE_PER_JAR = 8.50;
+
+    // DOM elements
+    const quantityInput = document.getElementById('quantity');
+    const summaryQty = document.getElementById('summaryQty');
+    const summaryTotal = document.getElementById('summaryTotal');
+    const orderForm = document.getElementById('peanutOrderForm');
+    const toast = document.getElementById('toast');
+    const addressInput = document.getElementById('address');
+    const fullNameInput = document.getElementById('fullName');
+    const orderBtn = document.getElementById('orderBtn');
+
+    // update summary based on quantity
+    function updateSummary() {
+      let qty = parseInt(quantityInput.value, 10);
+      if (isNaN(qty) || qty < 1) qty = 1;
+      if (qty > 99) qty = 99;
+      // reflect corrected value if needed
+      if (quantityInput.value != qty) quantityInput.value = qty;
+
+      summaryQty.textContent = qty;
+      const total = (qty * PRICE_PER_JAR).toFixed(2);
+      summaryTotal.textContent = `$${total}`;
+    }
+
+    // show toast message
+    function showToast(message, isSuccess = true) {
+      toast.textContent = message;
+      toast.style.backgroundColor = isSuccess ? '#2d5e3b' : '#a13d2b';
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // handle form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      // validate address (HTML required also helps, but just in case)
+      const address = addressInput.value.trim();
+      if (address === '') {
+        showToast('Please enter your delivery address.', false);
+        addressInput.focus();
+        return;
+      }
+
+      // validate quantity
+      let qty = parseInt(quantityInput.value, 10);
+      if (isNaN(qty) || qty < 1) {
+        showToast('Please enter a valid number of jars (min 1).', false);
+        quantityInput.value = 1;
+        updateSummary();
+        quantityInput.focus();
+        return;
+      }
+
+      // cap quantity at 99
+      if (qty > 99) {
+        quantityInput.value = 99;
+        updateSummary();
+        showToast('Maximum 99 jars per order. Adjusted quantity.', false);
+        return;
+      }
+
+      // optional name
+      const name = fullNameInput.value.trim() || 'friend';
+
+      // prepare order details (for demonstration, we'll show in toast)
+      const total = (qty * PRICE_PER_JAR).toFixed(2);
+      
+      // simulate order placement
+      // (in a real app this would POST to a server)
+      const orderSummaryMessage = `✓ Thanks ${name}! ${qty} jar${qty > 1 ? 's' : ''} ($${total}) → shipped to: ${address}`;
+      
+      // disable button briefly to prevent double-click, but keep interactive feel
+      orderBtn.disabled = true;
+      orderBtn.style.opacity = '0.8';
+      orderBtn.innerHTML = '<span>⏳</span> Processing...';
+
+      // simulate network request delay
+      setTimeout(() => {
+        // re-enable button
+        orderBtn.disabled = false;
+        orderBtn.style.opacity = '1';
+        orderBtn.innerHTML = '<span>🛒</span> Place order';
+
+        // show success
+        showToast(orderSummaryMessage, true);
+
+        // (optional) reset quantity to 2 for next order — but we keep as is, could leave.
+        // we'll keep the input but maybe reset address? No, user might want to order again quickly.
+        // we do not reset form, but you could if desired.
+        // However, we'll keep values so user can tweak and reorder.
+
+      }, 700);
+    }
+
+    // attach events
+    quantityInput.addEventListener('input', updateSummary);
+    quantityInput.addEventListener('change', updateSummary); // for spinner changes
+    orderForm.addEventListener('submit', handleSubmit);
+
+    // initialize summary on page load
+    updateSummary();
+
+    // force quantity to stay within bounds on blur
+    quantityInput.addEventListener('blur', function() {
+      let val = parseInt(quantityInput.value, 10);
+      if (isNaN(val) || val < 1) quantityInput.value = 1;
+      if (val > 99) quantityInput.value = 99;
+      updateSummary();
+    });
+
+    // also catch keydown for enter key? form submit will handle it.
+    // But pressing enter in the quantity field may submit prematurely; we can prevent
+    // but it's fine — form validation will run.
+    // Use a small tweak: prevent accidental form submit on enter inside quantity field? 
+    // It's okay.
+
+    // bonus: click on jar illustration to reset / fun?
+    document.querySelector('.jar-illustration')?.addEventListener('click', function() {
+      showToast('🥜 Stone ground, small batch — enjoy!', true);
+    });
+
+  })();
+</script>
+
+</body>
+  </html>
