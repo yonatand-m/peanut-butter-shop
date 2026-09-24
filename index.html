@@ -46,6 +46,7 @@
   .action-button { width: 100%; background: #b45f2b; color: white; font-weight: 700; font-size: 1.2rem; padding: 1.2rem 1.5rem; border: none; border-radius: 2rem; margin-top: 1.5rem; cursor: pointer; transition: 0.15s; display: flex; align-items: center; justify-content: center; gap: 0.75rem; box-shadow: 0 12px 18px -8px rgba(180,95,43,0.4); }
   .action-button:hover { background: #9f4e1f; transform: scale(1.01); }
   .action-button:active { transform: scale(0.99); }
+  .action-button:disabled { opacity: 0.7; cursor: not-allowed; }
   .visual-panel { background: #f7ede3; padding: 2rem 1.8rem; display: flex; flex-direction: column; border-left: 1px solid #e2d2c2; }
   .jar-illustration { background: radial-gradient(circle at 30% 30%, #f3e7db, #c9aa8b); border-radius: 180px 180px 40px 40px; width: 180px; height: 200px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 25px -10px rgba(80,50,25,0.3); border: 3px solid #b48b64; position: relative; }
   .jar-illustration::before { content: "🥜"; font-size: 5rem; }
@@ -57,13 +58,33 @@
   .info-block li span:first-child { font-size: 1.2rem; min-width: 1.6rem; text-align: center; }
   .referral-box { background: #eaf3ff; border: 2px dashed #4a7fc1; border-radius: 1.2rem; padding: 1.2rem; margin-top: 1rem; }
   .referral-box h4 { font-size: 1rem; color: #2c558f; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
-  .referral-link { background: white; padding: 0.7rem 0.9rem; border-radius: 0.7rem; font-family: monospace; font-size: 0.8rem; color: #1e3a63; word-break: break-all; border: 1px solid #b8d0ef; margin-bottom: 0.6rem; }
-  .referral-progress { font-size: 0.9rem; color: #2c558f; font-weight: 600; }
-  .copy-btn { background: #4a7fc1; color: white; border: none; padding: 0.6rem 1rem; border-radius: 0.7rem; font-weight: 600; cursor: pointer; font-size: 0.85rem; margin-top: 0.4rem; }
+  .referral-code-display { background: white; padding: 1rem; border-radius: 0.7rem; font-family: monospace; font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; color: #1e3a63; text-align: center; border: 2px dashed #b8d0ef; margin-bottom: 0.6rem; }
+  .referral-share-text { font-size: 0.85rem; color: #4a6b95; text-align: center; margin-bottom: 0.6rem; line-height: 1.4; }
+  .referral-progress { font-size: 0.9rem; color: #2c558f; font-weight: 600; text-align: center; }
+  .copy-btn { width: 100%; background: #4a7fc1; color: white; border: none; padding: 0.7rem 1rem; border-radius: 0.7rem; font-weight: 600; cursor: pointer; font-size: 0.9rem; margin-top: 0.4rem; }
   .toast-message { background: #2d5e3b; color: white; padding: 0.9rem 1.5rem; border-radius: 50px; font-weight: 600; text-align: center; margin-top: 1rem; font-size: 1rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
   .toast-message.show { opacity: 1; }
+  .success-screen { display: none; padding: 3rem 2rem; text-align: center; }
+  .success-screen.show { display: block; }
+  .success-icon { font-size: 5rem; margin-bottom: 1rem; animation: pop 0.5s ease; }
+  @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  .success-title { font-size: 2rem; font-weight: 700; color: #2d5e3b; margin-bottom: 0.5rem; }
+  .success-subtitle { font-size: 1.1rem; color: #5d4a3a; margin-bottom: 2rem; }
+  .order-receipt { background: #fdf5ed; border-radius: 1.5rem; padding: 1.8rem; max-width: 520px; margin: 0 auto 2rem; text-align: left; border: 1px solid #ecdccc; }
+  .receipt-header { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px dashed #d9c7b6; }
+  .receipt-header h3 { font-size: 1.3rem; color: #3a2618; font-weight: 700; }
+  .receipt-header .order-number { font-family: monospace; background: #b45f2b; color: white; padding: 0.3rem 0.9rem; border-radius: 30px; font-size: 0.85rem; display: inline-block; margin-top: 0.5rem; letter-spacing: 1px; }
+  .receipt-row { display: flex; justify-content: space-between; padding: 0.55rem 0; font-size: 0.95rem; color: #3a2a1e; border-bottom: 1px solid #f0e4d8; gap: 1rem; }
+  .receipt-row:last-child { border-bottom: none; }
+  .receipt-row .label { color: #7a5a44; font-weight: 500; flex-shrink: 0; }
+  .receipt-row .value { font-weight: 600; text-align: right; word-break: break-word; }
+  .receipt-total { display: flex; justify-content: space-between; padding: 1rem 0 0.3rem; margin-top: 0.5rem; border-top: 2px dashed #d9c7b6; font-size: 1.25rem; font-weight: 700; color: #9f4e1f; }
+  .success-actions { display: flex; flex-direction: column; gap: 0.8rem; max-width: 400px; margin: 0 auto; }
+  .success-btn { background: #b45f2b; color: white; padding: 1rem; border: none; border-radius: 1.5rem; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: 0.15s; }
+  .success-btn:hover { background: #9f4e1f; transform: scale(1.01); }
+  .delivery-reminder { background: #eaf3ff; border-radius: 1rem; padding: 1rem 1.3rem; margin: 1.5rem auto 0; max-width: 500px; font-size: 0.9rem; color: #2c558f; text-align: center; line-height: 1.5; }
   @media (max-width: 800px) { .content { grid-template-columns: 1fr; } .visual-panel { border-left: none; border-top: 1px solid #e2d2c2; } .order-panel { padding: 2rem 1.8rem; } }
-  @media (max-width: 480px) { body { padding: 0.75rem; } .header { padding: 1.5rem; } .header h1 { font-size: 1.5rem; } .tagline { font-size: 0.9rem; } .order-panel, .visual-panel { padding: 1.5rem; } .product-title h2 { font-size: 1.5rem; } .price { font-size: 1.5rem; } }
+  @media (max-width: 480px) { body { padding: 0.75rem; } .header { padding: 1.5rem; } .header h1 { font-size: 1.5rem; } .tagline { font-size: 0.9rem; } .order-panel, .visual-panel { padding: 1.5rem; } .product-title h2 { font-size: 1.5rem; } .price { font-size: 1.5rem; } .success-title { font-size: 1.5rem; } }
 </style>
 </head>
 <body>
@@ -74,7 +95,8 @@
     <div class="tagline">university delivery · 550 birr</div>
   </div>
 
-  <div class="content">
+  <!-- MAIN ORDER UI -->
+  <div class="content" id="orderContent">
     <div class="order-panel">
       <div class="product-highlight">
         <div class="product-title">
@@ -90,19 +112,17 @@
       <form class="order-form" id="peanutOrderForm">
         <h3>📦 Your order</h3>
 
-        <!-- QUANTITY -->
         <div class="form-group">
           <label for="quantity">🔢 Number of jars</label>
           <div class="qty-wrapper">
-            <input type="number" id="quantity" name="quantity" value="1" min="1" max="99" required>
-            <span class="qty-hint">max 99</span>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" max="99" step="1" required>
+            <span class="qty-hint">1 – 99</span>
           </div>
           <div class="discount-alert" id="bulkDiscount">
             🎉 30% bulk discount applied — you ordered 6+ jars!
           </div>
         </div>
 
-        <!-- UNIVERSITY -->
         <div class="form-group">
           <label>🎓 Which university?</label>
           <div class="radio-group">
@@ -117,7 +137,6 @@
           </div>
         </div>
 
-        <!-- AASTU BLOCK -->
         <div class="form-group" id="aastuBlockGroup" style="display:none;">
           <label for="aastuBlock">🏢 Which block? (1–28)</label>
           <select id="aastuBlock" name="aastuBlock">
@@ -125,7 +144,6 @@
           </select>
         </div>
 
-        <!-- AAU CAMPUS -->
         <div class="form-group" id="aauCampusGroup" style="display:none;">
           <label for="aauCampus">🏛️ Which campus?</label>
           <select id="aauCampus" name="aauCampus">
@@ -140,25 +158,21 @@
           </select>
         </div>
 
-        <!-- ADDRESS -->
         <div class="form-group">
           <label for="address">🏠 Specific address</label>
           <textarea id="address" name="address" rows="2" placeholder="Dorm number, room, or nearby landmark" required></textarea>
         </div>
 
-        <!-- 📞 PHONE NUMBER (NEW — right after address) -->
         <div class="form-group">
           <label for="phone">📞 Phone number</label>
           <input type="tel" id="phone" name="phone" placeholder="09xx xxx xxx" pattern="[0-9+\s-]{9,15}" required>
         </div>
 
-        <!-- 👤 FULL NAME -->
         <div class="form-group">
           <label for="fullName">👤 Full name</label>
           <input type="text" id="fullName" name="fullName" placeholder="Your name" required>
         </div>
 
-        <!-- 🕒 DELIVERY TIME (NEW — at the end) -->
         <div class="form-group">
           <label for="deliveryTime">🕒 When do you want it delivered?</label>
           <select id="deliveryTime" name="deliveryTime" required>
@@ -173,7 +187,6 @@
           </select>
         </div>
 
-        <!-- ORDER SUMMARY -->
         <div class="order-summary">
           <div class="summary-row">
             <span>Jars × 550 birr</span>
@@ -205,17 +218,78 @@
         <ul>
           <li><span>🎓</span> Delivered to your university</li>
           <li><span>💰</span> Order 6+ jars → 30% off</li>
-          <li><span>🎁</span> 12 referrals → 100% FREE</li>
+          <li><span>🎁</span> 12 referrals → big discount</li>
           <li><span>🚚</span> Same-week delivery on campus</li>
         </ul>
       </div>
 
       <div class="referral-box">
-        <h4>🎁 Your referral link</h4>
-        <div class="referral-link" id="referralLink">Loading...</div>
-        <button type="button" class="copy-btn" id="copyRefBtn">📋 Copy link</button>
+        <h4>🎁 Your referral code</h4>
+        <div class="referral-code-display" id="referralCode">------</div>
+        <div class="referral-share-text">
+          Share this code with friends.<br>When 12 friends use it, you unlock a <strong>big discount</strong>!
+        </div>
+        <button type="button" class="copy-btn" id="copyRefBtn">📋 Copy my code</button>
         <div class="referral-progress" id="referralProgress">Referrals: 0 / 12</div>
       </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Order placed successfully!</div>
+    <div class="success-subtitle">Thank you for your order 🥜</div>
+
+    <div class="order-receipt">
+      <div class="receipt-header">
+        <h3>Your Receipt</h3>
+        <div class="order-number" id="receiptOrderNum">#PB-0000-0000</div>
+      </div>
+      <div class="receipt-row">
+        <span class="label">👤 Name</span>
+        <span class="value" id="rName">—</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">📞 Phone</span>
+        <span class="value" id="rPhone">—</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">🎓 University</span>
+        <span class="value" id="rUni">—</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">📍 Location</span>
+        <span class="value" id="rLocation">—</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">🏠 Address</span>
+        <span class="value" id="rAddress">—</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">🔢 Jars</span>
+        <span class="value" id="rJars">—</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">🎁 Discount</span>
+        <span class="value" id="rDiscount">None</span>
+      </div>
+      <div class="receipt-row">
+        <span class="label">🕒 Delivery</span>
+        <span class="value" id="rDelivery">—</span>
+      </div>
+      <div class="receipt-total">
+        <span>Total</span>
+        <span id="rTotal">550 birr</span>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <button type="button" class="success-btn" id="newOrderBtn">🥜 Place another order</button>
+    </div>
+
+    <div class="delivery-reminder">
+      📬 We've received your order and will contact you on Telegram or phone to confirm the delivery time.
     </div>
   </div>
 </div>
@@ -223,12 +297,12 @@
 <script>
 (function() {
   // ================= CONFIG =================
-  const TELEGRAM_BOT_TOKEN = '7917605533:AAEbEf3vEZM8kbbx9qHRrwHZ8Cx1OFwGfkU';  // <-- paste your token
-  const TELEGRAM_CHAT_ID   = '6446270768';    // <-- paste your chat id
+  const TELEGRAM_BOT_TOKEN = '7917605533:AAEbEf3vEZM8kbbx9qHRrwHZ8Cx1OFwGfkU';
+  const TELEGRAM_CHAT_ID   = '6446270768';
   const PRICE_PER_JAR      = 550;
-  const BULK_THRESHOLD     = 6;
+  const BULK_THRESHOLD     = 6;    // 6+ jars → 30% off
   const BULK_DISCOUNT      = 0.30;
-  const REFERRAL_TARGET    = 12;
+  const REFERRAL_TARGET    = 12;   // 12 referrals → big discount (30% applied same as bulk)
   // ==========================================
 
   // ---------- Referral system ----------
@@ -240,9 +314,7 @@
     myRefCode = 'PB' + Math.random().toString(36).substring(2, 8).toUpperCase();
     localStorage.setItem('pb_my_ref', myRefCode);
   }
-
-  const referralLink = `${window.location.origin}${window.location.pathname}?ref=${myRefCode}`;
-  document.getElementById('referralLink').textContent = referralLink;
+  document.getElementById('referralCode').textContent = myRefCode;
 
   let refCount = parseInt(localStorage.getItem('pb_ref_count') || '0', 10);
   if (incomingRef && incomingRef !== myRefCode) {
@@ -253,198 +325,4 @@
       refCount += 1;
       localStorage.setItem('pb_ref_count', refCount);
     }
-  }
-  document.getElementById('referralProgress').textContent = `Referrals: ${refCount} / ${REFERRAL_TARGET}`;
-  const hasFreeDiscount = refCount >= REFERRAL_TARGET;
-
-  document.getElementById('copyRefBtn').addEventListener('click', () => {
-    navigator.clipboard.writeText(referralLink).then(() => {
-      document.getElementById('copyRefBtn').textContent = '✅ Copied!';
-      setTimeout(() => document.getElementById('copyRefBtn').textContent = '📋 Copy link', 2000);
-    }).catch(() => alert('Copy failed — long-press the link to copy manually.'));
-  });
-
-  // ---------- Populate AASTU blocks 1–28 ----------
-  const aastuSelect = document.getElementById('aastuBlock');
-  for (let i = 1; i <= 28; i++) {
-    const opt = document.createElement('option');
-    opt.value = `Block ${i}`;
-    opt.textContent = `Block ${i}`;
-    aastuSelect.appendChild(opt);
-  }
-
-  // ---------- University radio toggle ----------
-  const aastuGroup = document.getElementById('aastuBlockGroup');
-  const aauGroup   = document.getElementById('aauCampusGroup');
-  const radios = document.querySelectorAll('input[name="university"]');
-
-  radios.forEach(r => r.addEventListener('change', () => {
-    if (document.getElementById('aastu').checked) {
-      aastuGroup.style.display = 'block';
-      aauGroup.style.display   = 'none';
-      aastuSelect.required = true;
-      document.getElementById('aauCampus').required = false;
-    } else if (document.getElementById('aau').checked) {
-      aastuGroup.style.display = 'none';
-      aauGroup.style.display   = 'block';
-      aastuSelect.required = false;
-      document.getElementById('aauCampus').required = true;
-    }
-  }));
-
-  // ---------- Summary ----------
-  const quantityInput   = document.getElementById('quantity');
-  const summarySubtotal = document.getElementById('summarySubtotal');
-  const summaryTotal    = document.getElementById('summaryTotal');
-  const discountRow     = document.getElementById('discountRow');
-  const discountAmount  = document.getElementById('discountAmount');
-  const bulkDiscount    = document.getElementById('bulkDiscount');
-
-  function updateSummary() {
-    let qty = parseInt(quantityInput.value, 10);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    if (qty > 99) qty = 99;
-    if (quantityInput.value != qty) quantityInput.value = qty;
-
-    const subtotal = qty * PRICE_PER_JAR;
-    let finalTotal = subtotal;
-
-    if (hasFreeDiscount) {
-      discountRow.style.display = 'flex';
-      discountAmount.textContent = `−${subtotal} birr (FREE — 12 referrals)`;
-      finalTotal = 0;
-      bulkDiscount.classList.remove('show');
-    } else if (qty >= BULK_THRESHOLD) {
-      const discount = Math.round(subtotal * BULK_DISCOUNT);
-      finalTotal = subtotal - discount;
-      discountRow.style.display = 'flex';
-      discountAmount.textContent = `−${discount} birr`;
-      bulkDiscount.classList.add('show');
-    } else {
-      discountRow.style.display = 'none';
-      bulkDiscount.classList.remove('show');
-    }
-
-    summarySubtotal.textContent = `${subtotal} birr`;
-    summaryTotal.textContent    = `${finalTotal} birr`;
-  }
-
-  quantityInput.addEventListener('input', updateSummary);
-  quantityInput.addEventListener('change', updateSummary);
-  updateSummary();
-
-  // ---------- Submit ----------
-  const orderForm = document.getElementById('peanutOrderForm');
-  const toast     = document.getElementById('toast');
-  const orderBtn  = document.getElementById('orderBtn');
-
-  function showToast(msg, success = true) {
-    toast.textContent = msg;
-    toast.style.backgroundColor = success ? '#2d5e3b' : '#a13d2b';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 5000);
-  }
-
-  orderForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const qty          = parseInt(quantityInput.value, 10);
-    const name         = document.getElementById('fullName').value.trim();
-    const phone        = document.getElementById('phone').value.trim();
-    const address      = document.getElementById('address').value.trim();
-    const deliveryTime = document.getElementById('deliveryTime').value;
-    const uniAASTU     = document.getElementById('aastu').checked;
-    const uniAAU       = document.getElementById('aau').checked;
-
-    if (!name || !phone || !address) {
-      showToast('Please fill in name, phone, and address.', false);
-      return;
-    }
-    if (!uniAASTU && !uniAAU) {
-      showToast('Please select your university.', false);
-      return;
-    }
-    if (!deliveryTime) {
-      showToast('Please choose a delivery time.', false);
-      return;
-    }
-
-    let location = '';
-    if (uniAASTU) {
-      const block = aastuSelect.value;
-      if (!block) { showToast('Please choose your block.', false); return; }
-      location = `AASTU — ${block}`;
-    } else {
-      const campus = document.getElementById('aauCampus').value;
-      if (!campus) { showToast('Please choose your campus.', false); return; }
-      location = `AAU — ${campus}`;
-    }
-
-    const subtotal = qty * PRICE_PER_JAR;
-    let discountText = 'None';
-    let finalTotal = subtotal;
-    if (hasFreeDiscount) {
-      discountText = 'FREE (12 referrals)';
-      finalTotal = 0;
-    } else if (qty >= BULK_THRESHOLD) {
-      const d = Math.round(subtotal * BULK_DISCOUNT);
-      discountText = `−${d} birr (30% bulk)`;
-      finalTotal = subtotal - d;
-    }
-
-    const msg =
-      `🥜 NEW PEANUT BUTTER ORDER 🥜\n\n` +
-      `👤 Name: ${name}\n` +
-      `📞 Phone: ${phone}\n` +
-      `🎓 University: ${uniAASTU ? 'AASTU' : 'AAU'}\n` +
-      `📍 Location: ${location}\n` +
-      `🏠 Address: ${address}\n\n` +
-      `🔢 Jars: ${qty}\n` +
-      `💰 Subtotal: ${subtotal} birr\n` +
-      `🎁 Discount: ${discountText}\n` +
-      `💵 TOTAL: ${finalTotal} birr\n\n` +
-      `🕒 Delivery time: ${deliveryTime}\n` +
-      `🔗 Referral code: ${myRefCode}\n` +
-      `📅 ${new Date().toLocaleString()}`;
-
-    if (TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
-      showToast('⚠️ Telegram not configured — order simulated.', false);
-      console.log(msg);
-      return;
-    }
-
-    orderBtn.disabled = true;
-    orderBtn.textContent = '⏳ Sending...';
-
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg })
-    })
-    .then(r => r.json())
-    .then(data => {
-      orderBtn.disabled = false;
-      orderBtn.textContent = '🛒 Place order';
-      if (data.ok) {
-        showToast('✅ Order sent! We will contact you on Telegram.', true);
-        orderForm.reset();
-        aastuGroup.style.display = 'none';
-        aauGroup.style.display = 'none';
-        updateSummary();
-      } else {
-        showToast('❌ Something went wrong. Try again.', false);
-        console.error(data);
-      }
-    })
-    .catch(err => {
-      orderBtn.disabled = false;
-      orderBtn.textContent = '🛒 Place order';
-      showToast('❌ Network error. Try again.', false);
-      console.error(err);
-    });
-  });
-})();
-</script>
-
-</body>
-</html>
+             
