@@ -3,149 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peanut Butter Co. · University Orders</title>
+<title>Peanut Butter Co.</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
-  body { background: #fbf7f0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 1.5rem; }
-  .order-card { max-width: 1000px; width: 100%; background: white; border-radius: 2.5rem; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #f0e4d8; }
-  .header { background: linear-gradient(145deg, #c97b3f, #9f4e1f); padding: 2rem 2.5rem; color: white; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
-  .header h1 { font-size: 2.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.65rem; }
-  .header h1 span { font-size: 2.4rem; }
-  .tagline { font-size: 1.1rem; background: rgba(255,255,255,0.2); padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+  body { background: #fbf7f0; padding: 1.5rem; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+  .card { max-width: 1000px; width: 100%; background: white; border-radius: 2.5rem; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25); overflow: hidden; }
+  .header { background: linear-gradient(145deg, #c97b3f, #9f4e1f); padding: 2rem 2.5rem; color: white; }
+  .header h1 { font-size: 2rem; display: flex; align-items: center; gap: 0.5rem; }
+  .header p { margin-top: 0.5rem; opacity: 0.9; }
   .content { display: grid; grid-template-columns: 1fr 0.9fr; }
-  .order-panel { padding: 2rem 2rem 2rem 2.5rem; background: white; }
-  .product-highlight { background: #fef9f2; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f0ddcc; }
-  .product-title { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-  .product-title h2 { font-size: 1.8rem; font-weight: 700; color: #3a2618; }
-  .badge { background: #e6b17e; color: #2c1a0e; font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.9rem; border-radius: 30px; text-transform: uppercase; }
-  .price { font-size: 1.9rem; font-weight: 700; color: #9f4e1f; display: flex; align-items: baseline; gap: 0.3rem; margin: 0.5rem 0 0.25rem; }
-  .price small { font-size: 1rem; font-weight: 500; color: #7a5a44; }
-  .description { color: #5d4a3a; line-height: 1.5; margin-top: 0.75rem; font-size: 0.98rem; border-left: 3px solid #e6b17e; padding-left: 1rem; }
-  .order-form h3 { font-size: 1.4rem; font-weight: 600; color: #2e1e12; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-  .order-form h3::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, #e6d6c6, transparent); margin-left: 0.75rem; }
-  .form-group { margin-bottom: 1.6rem; }
-  .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #4f3a2b; margin-bottom: 0.4rem; letter-spacing: 0.3px; text-transform: uppercase; }
-  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.9rem 1.2rem; border: 1.5px solid #ddd0c2; border-radius: 1.2rem; font-size: 1rem; background: #fdfbf9; outline: none; font-family: inherit; color: #2a1e14; }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #b45f2b; box-shadow: 0 0 0 4px rgba(180,95,43,0.12); background: white; }
-  .form-group input::placeholder, .form-group textarea::placeholder { color: #b9a89b; }
+  .order-panel { padding: 2rem; }
+  .product { background: #fef9f2; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f0ddcc; }
+  .product h2 { font-size: 1.8rem; color: #3a2618; }
+  .price { font-size: 1.9rem; font-weight: 700; color: #9f4e1f; margin: 0.5rem 0; }
+  .price small { font-size: 1rem; color: #7a5a44; }
+  .desc { color: #5d4a3a; line-height: 1.5; border-left: 3px solid #e6b17e; padding-left: 1rem; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #4f3a2b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.3px; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.9rem 1.2rem; border: 1.5px solid #ddd0c2; border-radius: 1.2rem; font-size: 1rem; background: #fdfbf9; outline: none; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #b45f2b; background: white; }
   .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
   .radio-option { flex: 1; min-width: 140px; }
-  .radio-option input[type="radio"] { display: none; }
-  .radio-option label { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: #fdfbf9; border: 2px solid #ddd0c2; border-radius: 1.2rem; font-size: 1.05rem; font-weight: 600; color: #6b5342; cursor: pointer; transition: 0.15s; text-transform: none; letter-spacing: 0; }
-  .radio-option input[type="radio"]:checked + label { background: #fff3e6; border-color: #b45f2b; color: #9f4e1f; box-shadow: 0 4px 12px -4px rgba(180,95,43,0.3); }
-  .qty-wrapper { display: flex; align-items: center; gap: 0.8rem; }
-  .qty-wrapper input { max-width: 140px; text-align: center; font-weight: 600; font-size: 1.1rem; }
-  .qty-hint { font-size: 0.85rem; color: #927a68; background: #f3ede7; padding: 0.4rem 0.9rem; border-radius: 30px; white-space: nowrap; }
-  .discount-alert { background: linear-gradient(135deg, #fff1c8, #ffe0a3); color: #7a4e0a; padding: 0.9rem 1.2rem; border-radius: 1rem; margin-top: 0.6rem; font-size: 0.95rem; font-weight: 600; display: none; align-items: center; gap: 0.5rem; border: 1px solid #f0c674; }
-  .discount-alert.show { display: flex; }
-  .order-summary { background: #fdf5ed; border-radius: 1.5rem; padding: 1.5rem; margin-top: 1.8rem; border: 1px solid #ecdccc; }
-  .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; font-size: 1rem; color: #3a2a1e; }
-  .summary-row .discount-line { color: #2d7a3e; font-weight: 600; }
-  .summary-row.total { font-weight: 700; font-size: 1.3rem; margin-top: 0.8rem; padding-top: 0.9rem; border-top: 2px dashed #d9c7b6; color: #753e16; }
-  .summary-row.total span:last-child { color: #9f4e1f; }
-  .action-button { width: 100%; background: #b45f2b; color: white; font-weight: 700; font-size: 1.2rem; padding: 1.2rem 1.5rem; border: none; border-radius: 2rem; margin-top: 1.5rem; cursor: pointer; transition: 0.15s; display: flex; align-items: center; justify-content: center; gap: 0.75rem; box-shadow: 0 12px 18px -8px rgba(180,95,43,0.4); }
-  .action-button:hover { background: #9f4e1f; transform: scale(1.01); }
-  .action-button:active { transform: scale(0.99); }
-  .action-button:disabled { opacity: 0.7; cursor: not-allowed; }
-  .visual-panel { background: #f7ede3; padding: 2rem 1.8rem; display: flex; flex-direction: column; border-left: 1px solid #e2d2c2; }
-  .jar-illustration { background: radial-gradient(circle at 30% 30%, #f3e7db, #c9aa8b); border-radius: 180px 180px 40px 40px; width: 180px; height: 200px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 25px -10px rgba(80,50,25,0.3); border: 3px solid #b48b64; position: relative; }
-  .jar-illustration::before { content: "🥜"; font-size: 5rem; }
-  .jar-illustration::after { content: "550 BIRR"; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: #b45f2b; color: white; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; padding: 0.3rem 1.5rem; border-radius: 40px; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-  .info-block { background: #fff9f3; border-radius: 1.5rem; padding: 1.5rem 1.3rem; margin-top: 1rem; border: 1px solid #e4d4c4; }
-  .info-block h4 { font-size: 1.05rem; font-weight: 700; color: #4f3522; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-  .info-block ul { list-style: none; }
-  .info-block li { display: flex; gap: 0.75rem; margin-bottom: 0.7rem; font-size: 0.92rem; color: #4f3a2b; align-items: flex-start; }
-  .info-block li span:first-child { font-size: 1.2rem; min-width: 1.6rem; text-align: center; }
-  .referral-box { background: #eaf3ff; border: 2px dashed #4a7fc1; border-radius: 1.2rem; padding: 1.2rem; margin-top: 1rem; }
-  .referral-box h4 { font-size: 1rem; color: #2c558f; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
-  .referral-code-display { background: white; padding: 1rem; border-radius: 0.7rem; font-family: monospace; font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; color: #1e3a63; text-align: center; border: 2px dashed #b8d0ef; margin-bottom: 0.6rem; }
-  .referral-share-text { font-size: 0.85rem; color: #4a6b95; text-align: center; margin-bottom: 0.6rem; line-height: 1.4; }
-  .referral-progress { font-size: 0.9rem; color: #2c558f; font-weight: 600; text-align: center; }
-  .copy-btn { width: 100%; background: #4a7fc1; color: white; border: none; padding: 0.7rem 1rem; border-radius: 0.7rem; font-weight: 600; cursor: pointer; font-size: 0.9rem; margin-top: 0.4rem; }
-  .toast-message { background: #2d5e3b; color: white; padding: 0.9rem 1.5rem; border-radius: 50px; font-weight: 600; text-align: center; margin-top: 1rem; font-size: 1rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
-  .toast-message.show { opacity: 1; }
-  .success-screen { display: none; padding: 3rem 2rem; text-align: center; }
-  .success-screen.show { display: block; }
-  .success-icon { font-size: 5rem; margin-bottom: 1rem; animation: pop 0.5s ease; }
-  @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  .radio-option input { display: none; }
+  .radio-option label { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: #fdfbf9; border: 2px solid #ddd0c2; border-radius: 1.2rem; font-size: 1.05rem; font-weight: 600; color: #6b5342; cursor: pointer; text-transform: none; }
+  .radio-option input:checked + label { background: #fff3e6; border-color: #b45f2b; color: #9f4e1f; }
+  .qty-wrap { display: flex; align-items: center; gap: 0.8rem; }
+  .qty-wrap input { max-width: 140px; text-align: center; font-weight: 600; }
+  .qty-hint { font-size: 0.85rem; color: #927a68; background: #f3ede7; padding: 0.4rem 0.9rem; border-radius: 30px; }
+  .discount-alert { background: #fff1c8; color: #7a4e0a; padding: 0.9rem 1.2rem; border-radius: 1rem; margin-top: 0.6rem; font-size: 0.95rem; font-weight: 600; display: none; border: 1px solid #f0c674; }
+  .discount-alert.show { display: block; }
+  .summary { background: #fdf5ed; border-radius: 1.5rem; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid #ecdccc; }
+  .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.7rem; color: #3a2a1e; }
+  .summary-row.discount { color: #2d7a3e; font-weight: 600; }
+  .summary-row.total { font-weight: 700; font-size: 1.3rem; padding-top: 0.9rem; margin-top: 0.8rem; border-top: 2px dashed #d9c7b6; color: #9f4e1f; }
+  .btn { width: 100%; background: #b45f2b; color: white; font-weight: 700; font-size: 1.2rem; padding: 1.2rem; border: none; border-radius: 2rem; margin-top: 1.5rem; cursor: pointer; box-shadow: 0 12px 18px -8px rgba(180,95,43,0.4); }
+  .btn:hover { background: #9f4e1f; }
+  .btn:disabled { opacity: 0.7; cursor: not-allowed; }
+  .visual { background: #f7ede3; padding: 2rem; border-left: 1px solid #e2d2c2; }
+  .jar { background: radial-gradient(circle at 30% 30%, #f3e7db, #c9aa8b); border-radius: 180px 180px 40px 40px; width: 180px; height: 200px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 25px -10px rgba(80,50,25,0.3); border: 3px solid #b48b64; position: relative; }
+  .jar::before { content: "🥜"; font-size: 5rem; }
+  .jar::after { content: "550 BIRR"; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: #b45f2b; color: white; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; padding: 0.3rem 1.5rem; border-radius: 40px; white-space: nowrap; }
+  .info { background: #fff9f3; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #e4d4c4; margin-bottom: 1rem; }
+  .info h4 { font-size: 1rem; margin-bottom: 1rem; color: #4f3522; }
+  .info ul { list-style: none; }
+  .info li { display: flex; gap: 0.6rem; margin-bottom: 0.6rem; font-size: 0.9rem; color: #4f3a2b; }
+  .ref-box { background: #eaf3ff; border: 2px dashed #4a7fc1; border-radius: 1.2rem; padding: 1.2rem; }
+  .ref-box h4 { font-size: 1rem; color: #2c558f; margin-bottom: 0.6rem; }
+  .ref-code { background: white; padding: 1rem; border-radius: 0.7rem; font-family: monospace; font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; color: #1e3a63; text-align: center; border: 2px dashed #b8d0ef; margin-bottom: 0.6rem; }
+  .ref-info { font-size: 0.85rem; color: #4a6b95; text-align: center; margin-bottom: 0.6rem; line-height: 1.4; }
+  .ref-progress { font-size: 0.9rem; color: #2c558f; font-weight: 600; text-align: center; margin-top: 0.5rem; }
+  .copy-btn { width: 100%; background: #4a7fc1; color: white; border: none; padding: 0.7rem 1rem; border-radius: 0.7rem; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+  .toast { padding: 1rem 1.5rem; border-radius: 1rem; font-weight: 600; text-align: center; margin-top: 1rem; font-size: 0.95rem; display: none; }
+  .toast.show { display: block; }
+  .toast.error { background: #ffe6e6; color: #a13d2b; border: 1px solid #ffb8b8; }
+  .toast.success { background: #e6f5e9; color: #2d5e3b; border: 1px solid #b8e0c0; }
+
+  /* SUCCESS SCREEN */
+  #successScreen { display: none; padding: 3rem 2rem; text-align: center; }
+  #successScreen.show { display: block; }
+  .success-icon { font-size: 5rem; margin-bottom: 1rem; }
   .success-title { font-size: 2rem; font-weight: 700; color: #2d5e3b; margin-bottom: 0.5rem; }
-  .success-subtitle { font-size: 1.1rem; color: #5d4a3a; margin-bottom: 2rem; }
-  .order-receipt { background: #fdf5ed; border-radius: 1.5rem; padding: 1.8rem; max-width: 520px; margin: 0 auto 2rem; text-align: left; border: 1px solid #ecdccc; }
-  .receipt-header { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px dashed #d9c7b6; }
-  .receipt-header h3 { font-size: 1.3rem; color: #3a2618; font-weight: 700; }
-  .receipt-header .order-number { font-family: monospace; background: #b45f2b; color: white; padding: 0.3rem 0.9rem; border-radius: 30px; font-size: 0.85rem; display: inline-block; margin-top: 0.5rem; letter-spacing: 1px; }
-  .receipt-row { display: flex; justify-content: space-between; padding: 0.55rem 0; font-size: 0.95rem; color: #3a2a1e; border-bottom: 1px solid #f0e4d8; gap: 1rem; }
-  .receipt-row:last-child { border-bottom: none; }
-  .receipt-row .label { color: #7a5a44; font-weight: 500; flex-shrink: 0; }
-  .receipt-row .value { font-weight: 600; text-align: right; word-break: break-word; }
-  .receipt-total { display: flex; justify-content: space-between; padding: 1rem 0 0.3rem; margin-top: 0.5rem; border-top: 2px dashed #d9c7b6; font-size: 1.25rem; font-weight: 700; color: #9f4e1f; }
-  .success-actions { display: flex; flex-direction: column; gap: 0.8rem; max-width: 400px; margin: 0 auto; }
-  .success-btn { background: #b45f2b; color: white; padding: 1rem; border: none; border-radius: 1.5rem; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: 0.15s; }
-  .success-btn:hover { background: #9f4e1f; transform: scale(1.01); }
-  .delivery-reminder { background: #eaf3ff; border-radius: 1rem; padding: 1rem 1.3rem; margin: 1.5rem auto 0; max-width: 500px; font-size: 0.9rem; color: #2c558f; text-align: center; line-height: 1.5; }
-  @media (max-width: 800px) { .content { grid-template-columns: 1fr; } .visual-panel { border-left: none; border-top: 1px solid #e2d2c2; } .order-panel { padding: 2rem 1.8rem; } }
-  @media (max-width: 480px) { body { padding: 0.75rem; } .header { padding: 1.5rem; } .header h1 { font-size: 1.5rem; } .tagline { font-size: 0.9rem; } .order-panel, .visual-panel { padding: 1.5rem; } .product-title h2 { font-size: 1.5rem; } .price { font-size: 1.5rem; } .success-title { font-size: 1.5rem; } }
+  .success-sub { font-size: 1.1rem; color: #5d4a3a; margin-bottom: 2rem; }
+  .receipt { background: #fdf5ed; border-radius: 1.5rem; padding: 1.8rem; max-width: 520px; margin: 0 auto 2rem; text-align: left; border: 1px solid #ecdccc; }
+  .receipt-head { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px dashed #d9c7b6; }
+  .receipt-head h3 { font-size: 1.3rem; color: #3a2618; }
+  .order-num { font-family: monospace; background: #b45f2b; color: white; padding: 0.3rem 0.9rem; border-radius: 30px; font-size: 0.85rem; display: inline-block; margin-top: 0.5rem; letter-spacing: 1px; }
+  .r-row { display: flex; justify-content: space-between; padding: 0.55rem 0; font-size: 0.95rem; border-bottom: 1px solid #f0e4d8; gap: 1rem; }
+  .r-row:last-child { border-bottom: none; }
+  .r-row .lbl { color: #7a5a44; font-weight: 500; flex-shrink: 0; }
+  .r-row .val { font-weight: 600; text-align: right; word-break: break-word; color: #3a2a1e; }
+  .r-total { display: flex; justify-content: space-between; padding: 1rem 0 0.3rem; margin-top: 0.5rem; border-top: 2px dashed #d9c7b6; font-size: 1.25rem; font-weight: 700; color: #9f4e1f; }
+  .success-btn { background: #b45f2b; color: white; padding: 1rem 2rem; border: none; border-radius: 1.5rem; font-size: 1.05rem; font-weight: 700; cursor: pointer; }
+  .success-btn:hover { background: #9f4e1f; }
+  .reminder { background: #eaf3ff; border-radius: 1rem; padding: 1rem 1.3rem; margin: 1.5rem auto 0; max-width: 500px; font-size: 0.9rem; color: #2c558f; line-height: 1.5; }
+
+  @media (max-width: 800px) {
+    .content { grid-template-columns: 1fr; }
+    .visual { border-left: none; border-top: 1px solid #e2d2c2; }
+  }
 </style>
 </head>
 <body>
 
-<div class="order-card">
+<div class="card">
   <div class="header">
-    <h1><span>🥜</span> Peanut Butter Co.</h1>
-    <div class="tagline">university delivery · 550 birr</div>
+    <h1>🥜 Peanut Butter Co.</h1>
+    <p>university delivery · 550 birr</p>
   </div>
 
   <div class="content" id="orderContent">
     <div class="order-panel">
-      <div class="product-highlight">
-        <div class="product-title">
-          <h2>Classic Creamy</h2>
-          <div class="badge">best seller</div>
-        </div>
+      <div class="product">
+        <h2>Classic Creamy</h2>
         <div class="price">550 <small>birr / 16 oz jar</small></div>
-        <div class="description">
-          100% roasted peanuts. <strong>No salt, no additives, no preservatives</strong> — just pure, smooth peanut butter delivered fresh to your campus.
-        </div>
+        <div class="desc">100% roasted peanuts. <strong>No salt, no additives</strong> — just pure, smooth peanut butter.</div>
       </div>
 
-      <form class="order-form" id="peanutOrderForm">
-        <h3>📦 Your order</h3>
-
+      <form id="orderForm">
         <div class="form-group">
-          <label for="quantity">🔢 Number of jars</label>
-          <div class="qty-wrapper">
-            <input type="number" id="quantity" name="quantity" value="1" min="1" max="99" step="1" required>
+          <label>🔢 Number of jars</label>
+          <div class="qty-wrap">
+            <input type="number" id="quantity" value="1" min="1" max="99" required>
             <span class="qty-hint">1 – 99</span>
           </div>
-          <div class="discount-alert" id="bulkDiscount">
-            🎉 30% bulk discount applied — you ordered 6+ jars!
-          </div>
+          <div class="discount-alert" id="bulkAlert">🎉 30% bulk discount applied!</div>
         </div>
 
         <div class="form-group">
           <label>🎓 Which university?</label>
           <div class="radio-group">
             <div class="radio-option">
-              <input type="radio" id="aastu" name="university" value="AASTU" required>
-              <label for="aastu">🏫 AASTU</label>
+              <input type="radio" id="uniAastu" name="university" value="AASTU">
+              <label for="uniAastu">🏫 AASTU</label>
             </div>
             <div class="radio-option">
-              <input type="radio" id="aau" name="university" value="AAU" required>
-              <label for="aau">🏛️ AAU</label>
+              <input type="radio" id="uniAau" name="university" value="AAU">
+              <label for="uniAau">🏛️ AAU</label>
             </div>
           </div>
         </div>
 
-        <div class="form-group" id="aastuBlockGroup" style="display:none;">
-          <label for="aastuBlock">🏢 Which block? (1–28)</label>
-          <select id="aastuBlock" name="aastuBlock">
+        <div class="form-group" id="aastuGroup" style="display:none;">
+          <label>🏢 Which block? (1–28)</label>
+          <select id="aastuBlock">
             <option value="">— Choose your block —</option>
           </select>
         </div>
 
-        <div class="form-group" id="aauCampusGroup" style="display:none;">
-          <label for="aauCampus">🏛️ Which campus?</label>
-          <select id="aauCampus" name="aauCampus">
+        <div class="form-group" id="aauGroup" style="display:none;">
+          <label>🏛️ Which campus?</label>
+          <select id="aauCampus">
             <option value="">— Choose your campus —</option>
             <option value="6 Kilo">6 Kilo</option>
             <option value="5 Kilo">5 Kilo</option>
@@ -158,23 +145,23 @@
         </div>
 
         <div class="form-group">
-          <label for="address">🏠 Specific address</label>
-          <textarea id="address" name="address" rows="2" placeholder="Dorm number, room, or nearby landmark" required></textarea>
+          <label>🏠 Specific address</label>
+          <textarea id="address" rows="2" placeholder="Dorm number, room, or landmark" required></textarea>
         </div>
 
         <div class="form-group">
-          <label for="phone">📞 Phone number</label>
-          <input type="tel" id="phone" name="phone" placeholder="09xx xxx xxx" pattern="[0-9+\s-]{9,15}" required>
+          <label>📞 Phone number</label>
+          <input type="tel" id="phone" placeholder="09xx xxx xxx" required>
         </div>
 
         <div class="form-group">
-          <label for="fullName">👤 Full name</label>
-          <input type="text" id="fullName" name="fullName" placeholder="Your name" required>
+          <label>👤 Full name</label>
+          <input type="text" id="fullName" placeholder="Your name" required>
         </div>
 
         <div class="form-group">
-          <label for="deliveryTime">🕒 When do you want it delivered?</label>
-          <select id="deliveryTime" name="deliveryTime" required>
+          <label>🕒 When do you want it delivered?</label>
+          <select id="deliveryTime" required>
             <option value="">— Pick a delivery time —</option>
             <option value="Today (before 6 PM)">Today (before 6 PM)</option>
             <option value="Today (after 6 PM)">Today (after 6 PM)</option>
@@ -186,122 +173,229 @@
           </select>
         </div>
 
-        <div class="order-summary">
+        <div class="summary">
           <div class="summary-row">
             <span>Jars × 550 birr</span>
-            <span id="summarySubtotal">550 birr</span>
+            <span id="sumSubtotal">550 birr</span>
           </div>
-          <div class="summary-row" id="discountRow" style="display:none;">
-            <span class="discount-line">🎉 Bulk discount (30%)</span>
-            <span class="discount-line" id="discountAmount">−165 birr</span>
+          <div class="summary-row discount" id="discountRow" style="display:none;">
+            <span>🎉 Discount</span>
+            <span id="discountAmt">−165 birr</span>
           </div>
           <div class="summary-row total">
             <span>Total</span>
-            <span id="summaryTotal">550 birr</span>
+            <span id="sumTotal">550 birr</span>
           </div>
         </div>
 
-        <button type="submit" class="action-button" id="orderBtn">
-          🛒 Place order
-        </button>
-
-        <div class="toast-message" id="toast">✓ Order placed!</div>
+        <button type="submit" class="btn" id="orderBtn">🛒 Place order</button>
+        <div class="toast" id="toast"></div>
       </form>
     </div>
 
-    <div class="visual-panel">
-      <div class="jar-illustration"></div>
+    <div class="visual">
+      <div class="jar"></div>
 
-      <div class="info-block">
+      <div class="info">
         <h4>✨ Why you'll love it</h4>
         <ul>
-          <li><span>🎓</span> Delivered to your university</li>
-          <li><span>🧂</span> <strong>No salt</strong> — just pure peanuts</li>
-          <li><span>💰</span> Order 6+ jars → 30% off</li>
-          <li><span>🎁</span> 12 referrals → big discount</li>
+          <li>🎓 Delivered to your university</li>
+          <li>🧂 <strong>No salt</strong> — pure peanuts</li>
+          <li>💰 Order 6+ jars → 30% off</li>
+          <li>🎁 12 referrals → big discount</li>
         </ul>
       </div>
 
-      <div class="referral-box">
+      <div class="ref-box">
         <h4>🎁 Your referral code</h4>
-        <div class="referral-code-display" id="referralCode">------</div>
-        <div class="referral-share-text">
-          Share this code with friends.<br>When 12 friends use it, you unlock a <strong>big discount</strong>!
-        </div>
+        <div class="ref-code" id="refCode">------</div>
+        <div class="ref-info">Share your code with friends! When 12 friends use it, you unlock a <strong>big discount</strong>.</div>
         <button type="button" class="copy-btn" id="copyRefBtn">📋 Copy my code</button>
-        <div class="referral-progress" id="referralProgress">Referrals: 0 / 12</div>
+        <div class="ref-progress" id="refProgress">Referrals: 0 / 12</div>
       </div>
     </div>
   </div>
 
-  <div class="success-screen" id="successScreen">
+  <!-- SUCCESS SCREEN -->
+  <div id="successScreen">
     <div class="success-icon">✅</div>
     <div class="success-title">Order placed successfully!</div>
-    <div class="success-subtitle">Thank you for your order 🥜</div>
+    <div class="success-sub">Thank you for your order 🥜</div>
 
-    <div class="order-receipt">
-      <div class="receipt-header">
+    <div class="receipt">
+      <div class="receipt-head">
         <h3>Your Receipt</h3>
-        <div class="order-number" id="receiptOrderNum">#PB-0000-0000</div>
+        <div class="order-num" id="rOrderNum">#PB-0000-0000</div>
       </div>
-      <div class="receipt-row"><span class="label">👤 Name</span><span class="value" id="rName">—</span></div>
-      <div class="receipt-row"><span class="label">📞 Phone</span><span class="value" id="rPhone">—</span></div>
-      <div class="receipt-row"><span class="label">🎓 University</span><span class="value" id="rUni">—</span></div>
-      <div class="receipt-row"><span class="label">📍 Location</span><span class="value" id="rLocation">—</span></div>
-      <div class="receipt-row"><span class="label">🏠 Address</span><span class="value" id="rAddress">—</span></div>
-      <div class="receipt-row"><span class="label">🔢 Jars</span><span class="value" id="rJars">—</span></div>
-      <div class="receipt-row"><span class="label">🎁 Discount</span><span class="value" id="rDiscount">None</span></div>
-      <div class="receipt-row"><span class="label">🕒 Delivery</span><span class="value" id="rDelivery">—</span></div>
-      <div class="receipt-total"><span>Total</span><span id="rTotal">550 birr</span></div>
+      <div class="r-row"><span class="lbl">👤 Name</span><span class="val" id="rName">—</span></div>
+      <div class="r-row"><span class="lbl">📞 Phone</span><span class="val" id="rPhone">—</span></div>
+      <div class="r-row"><span class="lbl">🎓 University</span><span class="val" id="rUni">—</span></div>
+      <div class="r-row"><span class="lbl">📍 Location</span><span class="val" id="rLocation">—</span></div>
+      <div class="r-row"><span class="lbl">🏠 Address</span><span class="val" id="rAddress">—</span></div>
+      <div class="r-row"><span class="lbl">🔢 Jars</span><span class="val" id="rJars">—</span></div>
+      <div class="r-row"><span class="lbl">🎁 Discount</span><span class="val" id="rDiscount">None</span></div>
+      <div class="r-row"><span class="lbl">🕒 Delivery</span><span class="val" id="rDelivery">—</span></div>
+      <div class="r-total"><span>Total</span><span id="rTotal">550 birr</span></div>
     </div>
 
-    <div class="success-actions">
-      <button type="button" class="success-btn" id="newOrderBtn">🥜 Place another order</button>
-    </div>
+    <button type="button" class="success-btn" id="newOrderBtn">🥜 Place another order</button>
 
-    <div class="delivery-reminder">
-      📬 We've received your order and will contact you on Telegram or phone to confirm the delivery time.
+    <div class="reminder">
+      📬 We've received your order and will contact you soon to confirm the delivery time.
     </div>
   </div>
 </div>
 
 <script>
 (function() {
-  // ================= CONFIG =================
-  const TELEGRAM_BOT_TOKEN = '7917605533:AAEbEf3vEZM8kbbx9qHRrwHZ8Cx1OFwGfkU';
-  const TELEGRAM_CHAT_ID   = '6446270768';
-  const PRICE_PER_JAR      = 550;
-  const BULK_THRESHOLD     = 6;
-  const BULK_DISCOUNT      = 0.30;
-  const REFERRAL_TARGET    = 12;
+  'use strict';
 
-  // 🔑 OPTIONAL: JSONBIN for cross-device referrals
-  // Leave as-is to use local-only referrals (single device)
-  // OR sign up at jsonbin.io and paste your keys
-  const JSONBIN_BIN_ID  = 'PASTE_YOUR_BIN_ID_HERE';
-  const JSONBIN_API_KEY = 'PASTE_YOUR_MASTER_KEY_HERE';
-  const USE_SHARED_STORAGE = JSONBIN_BIN_ID !== 'PASTE_YOUR_BIN_ID_HERE';
-  // ==========================================
+  // ========== CONFIG ==========
+  var TELEGRAM_BOT_TOKEN = '7917605533:AAEbEf3vEZM8kbbx9qHRrwHZ8Cx1OFwGfkU';
+  var TELEGRAM_CHAT_ID   = '6446270768';
+  var PRICE_PER_JAR      = 550;
+  var BULK_THRESHOLD     = 6;
+  var BULK_DISCOUNT      = 0.30;
+  var REFERRAL_TARGET    = 12;
+  // ============================
 
-  // ---------- Referral system ----------
-  const refParams = new URLSearchParams(window.location.search);
-  const incomingRef = refParams.get('ref');
-
-  let myRefCode = localStorage.getItem('pb_my_ref');
+  // ---------- Referral (local storage) ----------
+  var myRefCode = localStorage.getItem('pb_my_ref');
   if (!myRefCode) {
     myRefCode = 'PB' + Math.random().toString(36).substring(2, 8).toUpperCase();
     localStorage.setItem('pb_my_ref', myRefCode);
   }
-  document.getElementById('referralCode').textContent = myRefCode;
+  document.getElementById('refCode').textContent = myRefCode;
 
-  let refCount = 0;
-  const referralProgress = document.getElementById('referralProgress');
+  var refCount = parseInt(localStorage.getItem('pb_ref_count') || '0', 10);
+  var urlRef = new URLSearchParams(window.location.search).get('ref');
+  if (urlRef && urlRef !== myRefCode) {
+    var seen = JSON.parse(localStorage.getItem('pb_seen') || '[]');
+    if (seen.indexOf(urlRef) === -1) {
+      seen.push(urlRef);
+      localStorage.setItem('pb_seen', JSON.stringify(seen));
+      refCount += 1;
+      localStorage.setItem('pb_ref_count', refCount);
+    }
+  }
+  document.getElementById('refProgress').textContent = 'Referrals: ' + refCount + ' / ' + REFERRAL_TARGET;
+  var hasBigDiscount = refCount >= REFERRAL_TARGET;
 
-  function updateRefUI() {
-    referralProgress.textContent = `Referrals: ${refCount} / ${REFERRAL_TARGET}`;
-    window._hasBigDiscount = refCount >= REFERRAL_TARGET;
-    updateSummary();
+  document.getElementById('copyRefBtn').onclick = function() {
+    var btn = this;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(myRefCode).then(function() {
+        btn.textContent = '✅ Copied!';
+        setTimeout(function() { btn.textContent = '📋 Copy my code'; }, 2000);
+      }).catch(function() {
+        alert('Your code: ' + myRefCode);
+      });
+    } else {
+      alert('Your code: ' + myRefCode);
+    }
+  };
+
+  // ---------- Populate AASTU blocks 1-28 ----------
+  var aastuBlockSelect = document.getElementById('aastuBlock');
+  for (var i = 1; i <= 28; i++) {
+    var opt = document.createElement('option');
+    opt.value = 'Block ' + i;
+    opt.textContent = 'Block ' + i;
+    aastuBlockSelect.appendChild(opt);
   }
 
-  function loadLocalReferrals() {
-    refCount = parseInt(localStorage.
+  // ---------- University toggle ----------
+  var aastuGroup = document.getElementById('aastuGroup');
+  var aauGroup   = document.getElementById('aauGroup');
+  var aastuRadio = document.getElementById('uniAastu');
+  var aauRadio   = document.getElementById('uniAau');
+
+  function updateUniFields() {
+    if (aastuRadio.checked) {
+      aastuGroup.style.display = 'block';
+      aauGroup.style.display = 'none';
+      aastuBlockSelect.required = true;
+      document.getElementById('aauCampus').required = false;
+    } else if (aauRadio.checked) {
+      aastuGroup.style.display = 'none';
+      aauGroup.style.display = 'block';
+      aastuBlockSelect.required = false;
+      document.getElementById('aauCampus').required = true;
+    } else {
+      aastuGroup.style.display = 'none';
+      aauGroup.style.display = 'none';
+    }
+  }
+  aastuRadio.addEventListener('change', updateUniFields);
+  aauRadio.addEventListener('change', updateUniFields);
+
+  // ---------- Summary ----------
+  var quantityInput = document.getElementById('quantity');
+  var sumSubtotal = document.getElementById('sumSubtotal');
+  var sumTotal = document.getElementById('sumTotal');
+  var discountRow = document.getElementById('discountRow');
+  var discountAmt = document.getElementById('discountAmt');
+  var bulkAlert = document.getElementById('bulkAlert');
+
+  function updateSummary() {
+    var qty = parseInt(quantityInput.value, 10);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    if (qty > 99) qty = 99;
+    if (quantityInput.value != qty) quantityInput.value = qty;
+
+    var subtotal = qty * PRICE_PER_JAR;
+    var finalTotal = subtotal;
+    var discount = 0;
+
+    if (qty >= BULK_THRESHOLD || hasBigDiscount) {
+      discount = Math.round(subtotal * BULK_DISCOUNT);
+      finalTotal = subtotal - discount;
+      discountRow.style.display = 'flex';
+      if (hasBigDiscount && qty < BULK_THRESHOLD) {
+        discountAmt.textContent = '−' + discount + ' birr (referral)';
+      } else {
+        discountAmt.textContent = '−' + discount + ' birr';
+      }
+      if (qty >= BULK_THRESHOLD) {
+        bulkAlert.classList.add('show');
+      } else {
+        bulkAlert.classList.remove('show');
+      }
+    } else {
+      discountRow.style.display = 'none';
+      bulkAlert.classList.remove('show');
+    }
+
+    sumSubtotal.textContent = subtotal + ' birr';
+    sumTotal.textContent = finalTotal + ' birr';
+  }
+  quantityInput.addEventListener('input', updateSummary);
+  quantityInput.addEventListener('change', updateSummary);
+  updateSummary();
+
+  // ---------- Toast ----------
+  var toast = document.getElementById('toast');
+  function showToast(msg, isError) {
+    toast.textContent = msg;
+    toast.className = 'toast show ' + (isError ? 'error' : 'success');
+    setTimeout(function() { toast.className = 'toast'; }, 5000);
+  }
+
+  // ---------- Order number ----------
+  function genOrderNum() {
+    var rand = Math.floor(1000 + Math.random() * 9000);
+    var d = new Date();
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    var dd = String(d.getDate()).padStart(2, '0');
+    return '#PB-' + mm + dd + '-' + rand;
+  }
+
+  // ---------- Submit ----------
+  var orderForm = document.getElementById('orderForm');
+  var orderBtn = document.getElementById('orderBtn');
+
+  orderForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var qty = parseInt(quantityInput.value, 10);
+    var name = document.getElementById(
