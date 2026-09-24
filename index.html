@@ -95,7 +95,6 @@
     <div class="tagline">university delivery · 550 birr</div>
   </div>
 
-  <!-- MAIN ORDER UI -->
   <div class="content" id="orderContent">
     <div class="order-panel">
       <div class="product-highlight">
@@ -105,7 +104,7 @@
         </div>
         <div class="price">550 <small>birr / 16 oz jar</small></div>
         <div class="description">
-          Roasted peanuts, a pinch of sea salt, and nothing else. Delivered fresh to your campus.
+          100% roasted peanuts. <strong>No salt, no additives, no preservatives</strong> — just pure, smooth peanut butter delivered fresh to your campus.
         </div>
       </div>
 
@@ -217,9 +216,9 @@
         <h4>✨ Why you'll love it</h4>
         <ul>
           <li><span>🎓</span> Delivered to your university</li>
+          <li><span>🧂</span> <strong>No salt</strong> — just pure peanuts</li>
           <li><span>💰</span> Order 6+ jars → 30% off</li>
           <li><span>🎁</span> 12 referrals → big discount</li>
-          <li><span>🚚</span> Same-week delivery on campus</li>
         </ul>
       </div>
 
@@ -235,7 +234,6 @@
     </div>
   </div>
 
-  <!-- SUCCESS SCREEN -->
   <div class="success-screen" id="successScreen">
     <div class="success-icon">✅</div>
     <div class="success-title">Order placed successfully!</div>
@@ -246,42 +244,15 @@
         <h3>Your Receipt</h3>
         <div class="order-number" id="receiptOrderNum">#PB-0000-0000</div>
       </div>
-      <div class="receipt-row">
-        <span class="label">👤 Name</span>
-        <span class="value" id="rName">—</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">📞 Phone</span>
-        <span class="value" id="rPhone">—</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">🎓 University</span>
-        <span class="value" id="rUni">—</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">📍 Location</span>
-        <span class="value" id="rLocation">—</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">🏠 Address</span>
-        <span class="value" id="rAddress">—</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">🔢 Jars</span>
-        <span class="value" id="rJars">—</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">🎁 Discount</span>
-        <span class="value" id="rDiscount">None</span>
-      </div>
-      <div class="receipt-row">
-        <span class="label">🕒 Delivery</span>
-        <span class="value" id="rDelivery">—</span>
-      </div>
-      <div class="receipt-total">
-        <span>Total</span>
-        <span id="rTotal">550 birr</span>
-      </div>
+      <div class="receipt-row"><span class="label">👤 Name</span><span class="value" id="rName">—</span></div>
+      <div class="receipt-row"><span class="label">📞 Phone</span><span class="value" id="rPhone">—</span></div>
+      <div class="receipt-row"><span class="label">🎓 University</span><span class="value" id="rUni">—</span></div>
+      <div class="receipt-row"><span class="label">📍 Location</span><span class="value" id="rLocation">—</span></div>
+      <div class="receipt-row"><span class="label">🏠 Address</span><span class="value" id="rAddress">—</span></div>
+      <div class="receipt-row"><span class="label">🔢 Jars</span><span class="value" id="rJars">—</span></div>
+      <div class="receipt-row"><span class="label">🎁 Discount</span><span class="value" id="rDiscount">None</span></div>
+      <div class="receipt-row"><span class="label">🕒 Delivery</span><span class="value" id="rDelivery">—</span></div>
+      <div class="receipt-total"><span>Total</span><span id="rTotal">550 birr</span></div>
     </div>
 
     <div class="success-actions">
@@ -300,9 +271,16 @@
   const TELEGRAM_BOT_TOKEN = '7917605533:AAEbEf3vEZM8kbbx9qHRrwHZ8Cx1OFwGfkU';
   const TELEGRAM_CHAT_ID   = '6446270768';
   const PRICE_PER_JAR      = 550;
-  const BULK_THRESHOLD     = 6;    // 6+ jars → 30% off
+  const BULK_THRESHOLD     = 6;
   const BULK_DISCOUNT      = 0.30;
-  const REFERRAL_TARGET    = 12;   // 12 referrals → big discount (30% applied same as bulk)
+  const REFERRAL_TARGET    = 12;
+
+  // 🔑 OPTIONAL: JSONBIN for cross-device referrals
+  // Leave as-is to use local-only referrals (single device)
+  // OR sign up at jsonbin.io and paste your keys
+  const JSONBIN_BIN_ID  = 'PASTE_YOUR_BIN_ID_HERE';
+  const JSONBIN_API_KEY = 'PASTE_YOUR_MASTER_KEY_HERE';
+  const USE_SHARED_STORAGE = JSONBIN_BIN_ID !== 'PASTE_YOUR_BIN_ID_HERE';
   // ==========================================
 
   // ---------- Referral system ----------
@@ -316,13 +294,14 @@
   }
   document.getElementById('referralCode').textContent = myRefCode;
 
-  let refCount = parseInt(localStorage.getItem('pb_ref_count') || '0', 10);
-  if (incomingRef && incomingRef !== myRefCode) {
-    const seen = JSON.parse(localStorage.getItem('pb_seen_refs') || '[]');
-    if (!seen.includes(incomingRef)) {
-      seen.push(incomingRef);
-      localStorage.setItem('pb_seen_refs', JSON.stringify(seen));
-      refCount += 1;
-      localStorage.setItem('pb_ref_count', refCount);
-    }
-             
+  let refCount = 0;
+  const referralProgress = document.getElementById('referralProgress');
+
+  function updateRefUI() {
+    referralProgress.textContent = `Referrals: ${refCount} / ${REFERRAL_TARGET}`;
+    window._hasBigDiscount = refCount >= REFERRAL_TARGET;
+    updateSummary();
+  }
+
+  function loadLocalReferrals() {
+    refCount = parseInt(localStorage.
