@@ -6,69 +6,68 @@
 <title>Peanut Butter Co.</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-  body { background: #fbf7f0; padding: 1.5rem; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
-  .card { max-width: 1000px; width: 100%; background: white; border-radius: 2.5rem; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25); overflow: hidden; }
-  .header { background: linear-gradient(145deg, #c97b3f, #9f4e1f); padding: 2rem 2.5rem; color: white; }
-  .header h1 { font-size: 2rem; display: flex; align-items: center; gap: 0.5rem; }
-  .header p { margin-top: 0.5rem; opacity: 0.9; }
-  .content { display: grid; grid-template-columns: 1fr 0.9fr; }
-  .order-panel { padding: 2rem; }
-  .product { background: #fef9f2; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f0ddcc; }
-  .product h2 { font-size: 1.8rem; color: #3a2618; }
-  .price { font-size: 1.9rem; font-weight: 700; color: #9f4e1f; margin: 0.5rem 0; }
-  .price small { font-size: 1rem; color: #7a5a44; }
-  .desc { color: #5d4a3a; line-height: 1.5; border-left: 3px solid #e6b17e; padding-left: 1rem; }
-  .form-group { margin-bottom: 1.5rem; }
-  .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #4f3a2b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.3px; }
-  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.9rem 1.2rem; border: 1.5px solid #ddd0c2; border-radius: 1.2rem; font-size: 1rem; background: #fdfbf9; outline: none; }
+  body { background: #fbf7f0; padding: 1rem; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+  .card { max-width: 1000px; width: 100%; background: white; border-radius: 2rem; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25); overflow: hidden; }
+  .header { background: linear-gradient(145deg, #c97b3f, #9f4e1f); padding: 1.75rem 2rem; color: white; }
+  .header h1 { font-size: 1.75rem; display: flex; align-items: center; gap: 0.5rem; }
+  .header p { margin-top: 0.4rem; opacity: 0.9; font-size: 0.95rem; }
+  .content { display: grid; grid-template-columns: 1fr 0.85fr; }
+  .order-panel { padding: 1.75rem; }
+  .product { background: #fef9f2; border-radius: 1.25rem; padding: 1.25rem; margin-bottom: 1.5rem; border: 1px solid #f0ddcc; }
+  .product h2 { font-size: 1.5rem; color: #3a2618; }
+  .price { font-size: 1.6rem; font-weight: 700; color: #9f4e1f; margin: 0.4rem 0; }
+  .price small { font-size: 0.95rem; color: #7a5a44; }
+  .desc { color: #5d4a3a; line-height: 1.5; font-size: 0.92rem; border-left: 3px solid #e6b17e; padding-left: 0.9rem; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-weight: 600; font-size: 0.82rem; color: #4f3a2b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.3px; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.85rem 1rem; border: 1.5px solid #ddd0c2; border-radius: 1rem; font-size: 1rem; background: #fdfbf9; outline: none; font-family: inherit; }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #b45f2b; background: white; }
-  .optional-tag { font-size: 0.75rem; color: #927a68; background: #f3ede7; padding: 0.15rem 0.6rem; border-radius: 20px; margin-left: 0.5rem; text-transform: none; letter-spacing: 0; font-weight: 500; }
-  .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .radio-option { flex: 1; min-width: 140px; }
+  .optional-tag { font-size: 0.7rem; color: #927a68; background: #f3ede7; padding: 0.15rem 0.55rem; border-radius: 20px; margin-left: 0.4rem; text-transform: none; letter-spacing: 0; font-weight: 500; }
+  .radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
   .radio-option input { display: none; }
-  .radio-option label { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: #fdfbf9; border: 2px solid #ddd0c2; border-radius: 1.2rem; font-size: 1.05rem; font-weight: 600; color: #6b5342; cursor: pointer; text-transform: none; }
+  .radio-option label { display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.9rem; background: #fdfbf9; border: 2px solid #ddd0c2; border-radius: 1rem; font-size: 1rem; font-weight: 600; color: #6b5342; cursor: pointer; text-transform: none; letter-spacing: 0; }
   .radio-option input:checked + label { background: #fff3e6; border-color: #b45f2b; color: #9f4e1f; }
-  .qty-wrap { display: flex; align-items: center; gap: 0.8rem; }
-  .qty-wrap input { max-width: 140px; text-align: center; font-weight: 600; }
-  .qty-hint { font-size: 0.85rem; color: #927a68; background: #f3ede7; padding: 0.4rem 0.9rem; border-radius: 30px; }
-  .discount-alert { background: #fff1c8; color: #7a4e0a; padding: 0.9rem 1.2rem; border-radius: 1rem; margin-top: 0.6rem; font-size: 0.95rem; font-weight: 600; display: none; border: 1px solid #f0c674; }
+  .qty-wrap { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .qty-wrap input { max-width: 130px; text-align: center; font-weight: 700; font-size: 1.1rem; }
+  .qty-hint { font-size: 0.8rem; color: #927a68; background: #f3ede7; padding: 0.35rem 0.85rem; border-radius: 30px; white-space: nowrap; }
+  .discount-alert { background: #fff1c8; color: #7a4e0a; padding: 0.8rem 1.1rem; border-radius: 0.9rem; margin-top: 0.5rem; font-size: 0.9rem; font-weight: 600; display: none; border: 1px solid #f0c674; }
   .discount-alert.show { display: block; }
-  .summary { background: #fdf5ed; border-radius: 1.5rem; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid #ecdccc; }
-  .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.7rem; color: #3a2a1e; }
+  .summary { background: #fdf5ed; border-radius: 1.25rem; padding: 1.25rem; margin-top: 1.25rem; border: 1px solid #ecdccc; }
+  .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: #3a2a1e; font-size: 0.95rem; }
   .summary-row.discount { color: #2d7a3e; font-weight: 600; }
-  .summary-row.total { font-weight: 700; font-size: 1.3rem; padding-top: 0.9rem; margin-top: 0.8rem; border-top: 2px dashed #d9c7b6; color: #9f4e1f; }
-  .btn { width: 100%; background: #b45f2b; color: white; font-weight: 700; font-size: 1.2rem; padding: 1.2rem; border: none; border-radius: 2rem; margin-top: 1.5rem; cursor: pointer; box-shadow: 0 12px 18px -8px rgba(180,95,43,0.4); }
+  .summary-row.total { font-weight: 700; font-size: 1.2rem; padding-top: 0.8rem; margin-top: 0.7rem; border-top: 2px dashed #d9c7b6; color: #9f4e1f; }
+  .btn { width: 100%; background: #b45f2b; color: white; font-weight: 700; font-size: 1.15rem; padding: 1.1rem; border: none; border-radius: 2rem; margin-top: 1.25rem; cursor: pointer; box-shadow: 0 12px 18px -8px rgba(180,95,43,0.4); }
   .btn:hover { background: #9f4e1f; }
   .btn:disabled { opacity: 0.7; cursor: not-allowed; }
-  .visual { background: #f7ede3; padding: 2rem; border-left: 1px solid #e2d2c2; }
-  .jar { background: radial-gradient(circle at 30% 30%, #f3e7db, #c9aa8b); border-radius: 180px 180px 40px 40px; width: 180px; height: 200px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 25px -10px rgba(80,50,25,0.3); border: 3px solid #b48b64; position: relative; }
-  .jar::before { content: "🥜"; font-size: 5rem; }
-  .jar::after { content: "550 BIRR"; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: #b45f2b; color: white; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; padding: 0.3rem 1.5rem; border-radius: 40px; white-space: nowrap; }
-  .info { background: #fff9f3; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #e4d4c4; }
-  .info h4 { font-size: 1rem; margin-bottom: 1rem; color: #4f3522; }
+  .visual { background: #f7ede3; padding: 1.75rem; border-left: 1px solid #e2d2c2; }
+  .jar { background: radial-gradient(circle at 30% 30%, #f3e7db, #c9aa8b); border-radius: 180px 180px 40px 40px; width: 160px; height: 180px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 25px -10px rgba(80,50,25,0.3); border: 3px solid #b48b64; position: relative; }
+  .jar::before { content: "🥜"; font-size: 4.5rem; }
+  .jar::after { content: "550 BIRR"; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: #b45f2b; color: white; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; padding: 0.3rem 1.3rem; border-radius: 40px; white-space: nowrap; }
+  .info { background: #fff9f3; border-radius: 1.25rem; padding: 1.25rem; border: 1px solid #e4d4c4; }
+  .info h4 { font-size: 0.98rem; margin-bottom: 0.9rem; color: #4f3522; }
   .info ul { list-style: none; }
-  .info li { display: flex; gap: 0.6rem; margin-bottom: 0.6rem; font-size: 0.9rem; color: #4f3a2b; }
-  .toast { padding: 1rem 1.5rem; border-radius: 1rem; font-weight: 600; text-align: center; margin-top: 1rem; font-size: 0.95rem; display: none; }
+  .info li { display: flex; gap: 0.55rem; margin-bottom: 0.55rem; font-size: 0.88rem; color: #4f3a2b; }
+  .toast { padding: 0.9rem 1.3rem; border-radius: 1rem; font-weight: 600; text-align: center; margin-top: 1rem; font-size: 0.92rem; display: none; }
   .toast.show { display: block; }
   .toast.error { background: #ffe6e6; color: #a13d2b; border: 1px solid #ffb8b8; }
   .toast.success { background: #e6f5e9; color: #2d5e3b; border: 1px solid #b8e0c0; }
-  #successScreen { display: none; padding: 3rem 2rem; text-align: center; }
+  #successScreen { display: none; padding: 2.5rem 1.5rem; text-align: center; }
   #successScreen.show { display: block; }
-  .success-icon { font-size: 5rem; margin-bottom: 1rem; }
-  .success-title { font-size: 2rem; font-weight: 700; color: #2d5e3b; margin-bottom: 0.5rem; }
-  .success-sub { font-size: 1.1rem; color: #5d4a3a; margin-bottom: 2rem; }
-  .receipt { background: #fdf5ed; border-radius: 1.5rem; padding: 1.8rem; max-width: 520px; margin: 0 auto 2rem; text-align: left; border: 1px solid #ecdccc; }
-  .receipt-head { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px dashed #d9c7b6; }
-  .receipt-head h3 { font-size: 1.3rem; color: #3a2618; }
-  .order-num { font-family: monospace; background: #b45f2b; color: white; padding: 0.3rem 0.9rem; border-radius: 30px; font-size: 0.85rem; display: inline-block; margin-top: 0.5rem; letter-spacing: 1px; }
-  .r-row { display: flex; justify-content: space-between; padding: 0.55rem 0; font-size: 0.95rem; border-bottom: 1px solid #f0e4d8; gap: 1rem; }
+  .success-icon { font-size: 4.5rem; margin-bottom: 1rem; }
+  .success-title { font-size: 1.8rem; font-weight: 700; color: #2d5e3b; margin-bottom: 0.4rem; }
+  .success-sub { font-size: 1rem; color: #5d4a3a; margin-bottom: 1.75rem; }
+  .receipt { background: #fdf5ed; border-radius: 1.25rem; padding: 1.5rem; max-width: 520px; margin: 0 auto 1.75rem; text-align: left; border: 1px solid #ecdccc; }
+  .receipt-head { text-align: center; margin-bottom: 1.25rem; padding-bottom: 0.9rem; border-bottom: 2px dashed #d9c7b6; }
+  .receipt-head h3 { font-size: 1.15rem; color: #3a2618; }
+  .order-num { font-family: monospace; background: #b45f2b; color: white; padding: 0.3rem 0.85rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin-top: 0.45rem; letter-spacing: 1px; }
+  .r-row { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.92rem; border-bottom: 1px solid #f0e4d8; gap: 0.75rem; }
   .r-row:last-child { border-bottom: none; }
   .r-row .lbl { color: #7a5a44; font-weight: 500; flex-shrink: 0; }
   .r-row .val { font-weight: 600; text-align: right; word-break: break-word; color: #3a2a1e; }
-  .r-total { display: flex; justify-content: space-between; padding: 1rem 0 0.3rem; margin-top: 0.5rem; border-top: 2px dashed #d9c7b6; font-size: 1.25rem; font-weight: 700; color: #9f4e1f; }
-  .success-btn { background: #b45f2b; color: white; padding: 1rem 2rem; border: none; border-radius: 1.5rem; font-size: 1.05rem; font-weight: 700; cursor: pointer; }
+  .r-total { display: flex; justify-content: space-between; padding: 0.9rem 0 0.3rem; margin-top: 0.45rem; border-top: 2px dashed #d9c7b6; font-size: 1.2rem; font-weight: 700; color: #9f4e1f; }
+  .success-btn { background: #b45f2b; color: white; padding: 0.95rem 1.75rem; border: none; border-radius: 1.5rem; font-size: 1rem; font-weight: 700; cursor: pointer; }
   .success-btn:hover { background: #9f4e1f; }
-  .reminder { background: #eaf3ff; border-radius: 1rem; padding: 1rem 1.3rem; margin: 1.5rem auto 0; max-width: 500px; font-size: 0.9rem; color: #2c558f; line-height: 1.5; }
+  .reminder { background: #eaf3ff; border-radius: 1rem; padding: 0.9rem 1.2rem; margin: 1.25rem auto 0; max-width: 480px; font-size: 0.88rem; color: #2c558f; line-height: 1.5; }
   @media (max-width: 800px) {
     .content { grid-template-columns: 1fr; }
     .visual { border-left: none; border-top: 1px solid #e2d2c2; }
@@ -91,12 +90,12 @@
         <div class="desc">100% roasted peanuts. <strong>No salt, no additives</strong> — just pure, smooth peanut butter.</div>
       </div>
 
-      <form id="orderForm">
+      <form id="orderForm" novalidate>
         <div class="form-group">
           <label>🔢 Number of jars</label>
           <div class="qty-wrap">
-            <input type="number" id="quantity" value="1" min="1" max="99" required>
-            <span class="qty-hint">1 – 99</span>
+            <input type="number" id="quantity" value="1" min="1" max="99" step="1" inputmode="numeric" required>
+            <span class="qty-hint">type any number 1 – 99</span>
           </div>
           <div class="discount-alert" id="bulkAlert">🎉 30% bulk discount applied!</div>
         </div>
@@ -165,7 +164,6 @@
           </select>
         </div>
 
-        <!-- NEW OPTIONAL REFERRER FIELD -->
         <div class="form-group">
           <label>🤝 Who recommended you? <span class="optional-tag">optional</span></label>
           <input type="text" id="referredBy" placeholder="Name or Telegram username of the person who told you about us">
@@ -177,7 +175,7 @@
             <span id="sumSubtotal">550 birr</span>
           </div>
           <div class="summary-row discount" id="discountRow" style="display:none;">
-            <span>🎉 Discount</span>
+            <span>🎉 Discount (30%)</span>
             <span id="discountAmt">−165 birr</span>
           </div>
           <div class="summary-row total">
@@ -199,7 +197,7 @@
           <li>🎓 Delivered to your university</li>
           <li>🧂 <strong>No salt</strong> — pure peanuts</li>
           <li>💰 Order 6+ jars → 30% off</li>
-          <li>🤝 Refer a friend → both get rewards</li>
+          <li>🤝 Refer a friend → rewards</li>
         </ul>
       </div>
     </div>
@@ -248,7 +246,7 @@
   var BULK_DISCOUNT      = 0.30;
   // ============================
 
-  // ---------- AASTU blocks 1-28 ----------
+  // ---------- Populate AASTU blocks 1-28 ----------
   var aastuBlockSelect = document.getElementById('aastuBlock');
   for (var i = 1; i <= 28; i++) {
     var opt = document.createElement('option');
@@ -267,13 +265,9 @@
     if (aastuRadio.checked) {
       aastuGroup.style.display = 'block';
       aauGroup.style.display = 'none';
-      aastuBlockSelect.required = true;
-      document.getElementById('aauCampus').required = false;
     } else if (aauRadio.checked) {
       aastuGroup.style.display = 'none';
       aauGroup.style.display = 'block';
-      aastuBlockSelect.required = false;
-      document.getElementById('aauCampus').required = true;
     } else {
       aastuGroup.style.display = 'none';
       aauGroup.style.display = 'none';
@@ -335,6 +329,28 @@
     return '#PB-' + mm + dd + '-' + rand;
   }
 
+  // ---------- Send to Telegram (GET fallback = works reliably) ----------
+  function sendToTelegram(text, onDone) {
+    var encoded = encodeURIComponent(text);
+    var url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN +
+              '/sendMessage?chat_id=' + TELEGRAM_CHAT_ID + '&text=' + encoded;
+
+    // Use an Image() trick — no CORS, no preflight, very reliable
+    var img = new Image();
+    var finished = false;
+    function done() {
+      if (finished) return;
+      finished = true;
+      onDone();
+    }
+    img.onload = done;
+    img.onerror = done;
+    img.src = url;
+
+    // Safety timeout
+    setTimeout(done, 6000);
+  }
+
   // ---------- Submit ----------
   var orderForm = document.getElementById('orderForm');
   var orderBtn = document.getElementById('orderBtn');
@@ -351,6 +367,7 @@
     var uniAASTU = aastuRadio.checked;
     var uniAAU = aauRadio.checked;
 
+    // -------- Validation --------
     if (!name || !phone || !address) {
       showToast('Please fill in name, phone, and address.', true);
       return;
@@ -391,20 +408,4 @@
     var referredByDisplay = referredBy ? referredBy : 'No one';
 
     var msg = '🥜 NEW PEANUT BUTTER ORDER 🥜\n\n' +
-      '🧾 Order: ' + orderNumber + '\n\n' +
-      '👤 Name: ' + name + '\n' +
-      '📞 Phone: ' + phone + '\n' +
-      '🎓 University: ' + (uniAASTU ? 'AASTU' : 'AAU') + '\n' +
-      '📍 Location: ' + location + '\n' +
-      '🏠 Address: ' + address + '\n\n' +
-      '🔢 Jars: ' + qty + '\n' +
-      '💰 Subtotal: ' + subtotal + ' birr\n' +
-      '🎁 Discount: ' + discountText + '\n' +
-      '💵 TOTAL: ' + finalTotal + ' birr\n\n' +
-      '🕒 Delivery: ' + deliveryTime + '\n' +
-      '🤝 Referred by: ' + referredByDisplay + '\n' +
-      '📅 ' + new Date().toLocaleString();
-
-    // Fill receipt
-    document.getElementById('rOrderNum').textContent = orderNumber;
-    document.getElementById('rNa
+      '🧾 Or
